@@ -1,4 +1,4 @@
-# [Project Name] - Full Stack Application
+# [Traveler] - Full Stack Application
 
 ## 🏠 Project Description
 Teck stacs :
