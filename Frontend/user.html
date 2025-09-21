@@ -1,0 +1,2907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traveler - User Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #4776E6 0%, #8E54E9 100%);
+            color: white;
+            padding: 20px 0;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            font-size: 32px;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-left: auto;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .user-email {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 25px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        nav ul li a:hover {
+            color: #ffeb3b;
+        }
+
+        .search-bar {
+            display: flex;
+            margin: 20px 0;
+            padding: 0 20px;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 50px 0 0 50px;
+            font-size: 16px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-bar button {
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #4776E6 0%, #8E54E9 100%);
+            color: white;
+            border: none;
+            border-radius: 0 50px 50px 0;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+
+        .search-bar button:hover {
+            background: white;
+            color: #764ba2;
+        }
+
+        .section-title {
+            text-align: center;
+            margin: 40px 0 30px;
+            color: rebeccapurple;
+            position: relative;
+        }
+
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: #ff9800;
+            margin: 10px auto;
+            border-radius: 2px;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover .card-img img {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: rebeccapurple;
+        }
+
+        .card-location {
+            color: #666;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .card-location i {
+            margin-right: 8px;
+            color: #ff9800;
+        }
+
+        .card-description {
+            color: #777;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .card-price {
+            font-weight: 700;
+            color: #e91e63;
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+
+        .card-button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #4776E6 0%, #8E54E9 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .card-button:hover {
+            background: linear-gradient(135deg, #4776E6 0%, #8E54E9 100%);
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 12px 25px;
+            background: #e0e0e0;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #4776E6 0%, #8E54E9 100%);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 3% auto;
+            padding: 0;
+            border-radius: 15px;
+            width: 95%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .booking-container {
+            display: flex;
+            min-height: 500px;
+        }
+
+        .booking-form-container {
+            flex: 1.2;
+            padding: 30px;
+            border-right: 1px solid #eee;
+        }
+
+        .booking-summary-container {
+            flex: 0.8;
+            padding: 30px;
+            background: #f9fafb;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .close {
+            color: #aaa;
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            background: none;
+            border: none;
+            z-index: 1001;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .booking-form {
+            display: grid;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #1a237e;
+        }
+
+        .form-group input, .form-group select {
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #1a237e;
+            box-shadow: 0 0 0 3px rgba(71, 118, 230, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .total-cost-display {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-weight: bold;
+            text-align: center;
+            font-size: 18px;
+            color: #2e7d32;
+        }
+
+        .summary-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 25px;
+        }
+
+        .summary-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .summary-header img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 15px;
+        }
+
+        .summary-details h3 {
+            color: #1a237e;
+            margin-bottom: 5px;
+        }
+
+        .summary-details p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .price-details {
+            margin: 20px 0;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 8px 0;
+        }
+
+        .price-row.total {
+            font-weight: 700;
+            font-size: 18px;
+            color: #1a237e;
+            border-top: 2px solid #eee;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+
+        .pay-now-btn, .add-to-cart-btn {
+            background: linear-gradient(135deg, #4776E6 0%, #8E54E9 100%);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .pay-now-btn:hover, .add-to-cart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(71, 118, 230, 0.3);
+        }
+
+        /* Payment Modal Styles */
+        .payment-modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+
+        .payment-container {
+            display: flex;
+            max-width: 1100px;
+            width: 95%;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 2% auto;
+            max-height: 95vh;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+        }
+
+        .payment-left-panel {
+            flex: 1;
+            background: linear-gradient(135deg, #4776E6 0%, #8E54E9 100%);
+            color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .payment-right-panel {
+            flex: 1.2;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .payment-logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+        }
+
+        .payment-logo i {
+            margin-right: 10px;
+            font-size: 28px;
+        }
+
+        .payment-features {
+            margin-top: 30px;
+        }
+
+        .payment-feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .payment-feature i {
+            font-size: 20px;
+            margin-right: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card-image {
+            width: 100%;
+            max-width: 300px;
+            height: 180px;
+            background: linear-gradient(45deg, #3a7bd5, #00d2ff);
+            border-radius: 12px;
+            margin: 0 auto 30px;
+            padding: 20px;
+            color: white;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-image::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(45deg);
+        }
+
+        .card-chip {
+            width: 50px;
+            height: 40px;
+            background: linear-gradient(45deg, #ffcc33, #ffdb73);
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .card-number {
+            font-size: 20px;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .card-details {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+        }
+
+        .card-holder {
+            text-transform: uppercase;
+        }
+
+        .payment-form h2 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+            text-align: center;
+        }
+
+        .payment-form .form-group {
+            margin-bottom: 20px;
+        }
+
+        .payment-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .payment-form input, .payment-form select {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        .payment-form input:focus, .payment-form select:focus {
+            border-color: #4776E6;
+            box-shadow: 0 0 0 2px rgba(71, 118, 230, 0.2);
+        }
+
+        .payment-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .card-icons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            justify-content: center;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 30px;
+            background: #f1f1f1;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .card-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .secure {
+            text-align: center;
+            margin-top: 20px;
+            color: #777;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .secure i {
+            margin-right: 8px;
+            color: #4776E6;
+        }
+
+        /* Notification styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #4776E6 0%, #8E54E9 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            z-index: 1002;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            min-width: 300px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.error {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        }
+
+        .notification.success {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+        }
+
+        .notification.warning {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+        }
+
+        /* Loading Spinner */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            color: white;
+            font-size: 18px;
+            backdrop-filter: blur(5px);
+        }
+
+        .loading-overlay.show {
+            display: flex;
+        }
+
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4776E6;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin-right: 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Trip Log Styles */
+        .trip-log {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .booking-item {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-left: 5px solid transparent;
+        }
+
+        .booking-item.confirmed {
+            border-left-color: #4CAF50;
+        }
+
+        .booking-item.cart {
+            border-left-color: #ff9800;
+        }
+
+        .booking-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .booking-status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-confirmed {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .status-cart {
+            background: #ff9800;
+            color: white;
+        }
+
+        /* Contact Section Styles */
+        .contact-section {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .contact-info {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+        }
+
+        .contact-form {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+        }
+
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+        }
+
+        .send-btn {
+            background: linear-gradient(135deg, #4776E6 0%, #8E54E9 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+        }
+
+        /* AI Chat Styles */
+        .chat-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .chat-toggle {
+            background: linear-gradient(135deg, #4776E6 0%, #8E54E9 100%);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .chat-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .chat-window {
+            display: none;
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 350px;
+            height: 500px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #4776E6 0%, #8E54E9 100%);
+            color: white;
+            padding: 15px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-messages {
+            height: 380px;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .message {
+            margin: 10px 0;
+            padding: 12px 16px;
+            border-radius: 18px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .user-message {
+            background: #e3f2fd;
+            margin-left: auto;
+            border-bottom-right-radius: 4px;
+        }
+
+        .ai-message {
+            background: linear-gradient(135deg, #4776E6 0%, #8E54E9 100%);
+            color: white;
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid #eee;
+            background: white;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            margin-right: 10px;
+            font-size: 14px;
+        }
+
+        .chat-input button {
+            background: linear-gradient(135deg, #4776E6 0%, #8E54E9 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #4776E6 0%, #8E54E9 100%);
+            color: white;
+            padding: 40px 0;
+            margin-top: 50px;
+            border-radius: 10px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 20px;
+            padding: 0 20px;
+        }
+
+        .footer-section h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-section h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: #ff9800;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #ff9800;
+        }
+
+        .social-icons {
+            display: flex;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            margin-right: 10px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background: #ff9800;
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section-content {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+
+            .user-profile {
+                margin: 15px 0;
+            }
+
+            .user-info {
+                align-items: center;
+                text-align: center;
+            }
+
+            nav ul {
+                margin-top: 20px;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                flex-direction: column;
+            }
+
+            .form-row, .payment-row {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chat-window {
+                width: 90vw;
+                right: 5vw;
+            }
+
+            .payment-container {
+                flex-direction: column;
+                margin: 2% auto;
+            }
+
+            .payment-left-panel {
+                padding: 30px;
+                text-align: center;
+            }
+
+            .card-image {
+                width: 250px;
+                height: 140px;
+            }
+
+            .booking-container {
+                flex-direction: column;
+                min-height: auto;
+            }
+
+            .booking-form-container {
+                border-right: none;
+                border-bottom: 1px solid #eee;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+    <div style="display: flex; align-items: center;">
+        <div class="loading-spinner"></div>
+        <span>Loading...</span>
+    </div>
+</div>
+
+<div class="container">
+    <header>
+        <div class="header-content">
+            <div class="logo" onclick="showSection('home')">
+                <i class="fas fa-globe-asia"></i>
+                <span>Traveler</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a onclick="showSection('home')">Home</a></li>
+                    <li><a onclick="showSection('destinations')">Destinations</a></li>
+                    <li><a onclick="showSection('contact')">Contact</a></li>
+                    <li><a onclick="showSection('trip-log')">My Booking</a></li>
+                </ul>
+            </nav>
+            <div class="user-profile" id="userProfile" style="display: none;">
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="user-info">
+                    <div class="user-name" id="userName">Guest User</div>
+                    <div class="user-email" id="userEmail">guest@example.com</div>
+                </div>
+                <button class="logout-btn" onclick="handleLogout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search for destinations, hotels, or tours..." id="searchInput">
+            <button onclick="performSearch()">Search</button>
+        </div>
+    </header>
+
+    <!-- Home Section -->
+    <div id="home" class="section-content">
+        <div class="tabs">
+            <div class="tab active" data-tab="hotels" onclick="showTab('hotels', this)">Hotels</div>
+            <div class="tab" data-tab="tours" onclick="showTab('tours', this)">Tours</div>
+            <div class="tab" data-tab="transports" onclick="showTab('transports', this)">Transportation</div>
+        </div>
+
+        <div class="tab-content active" id="hotels">
+            <h2 class="section-title">Featured Hotels</h2>
+            <div class="cards-container">
+                <!-- Hotel cards will be generated here -->
+            </div>
+        </div>
+
+        <div class="tab-content" id="tours">
+            <h2 class="section-title">Popular Tours</h2>
+            <div class="cards-container">
+                <!-- Tour cards will be generated here -->
+            </div>
+        </div>
+
+        <div class="tab-content" id="transports">
+            <h2 class="section-title">Transport Options</h2>
+            <div class="cards-container">
+                <!-- Transport cards will be generated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Destinations Section -->
+    <div id="destinations" class="section-content" style="display: none;">
+        <h2 class="section-title">Popular Destinations</h2>
+        <div class="contact-section">
+            <h3>Destination Information & Contacts</h3>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h4><i class="fas fa-map-marker-alt"></i> Maldives</h4>
+                    <p><strong>Best Time to Visit:</strong> November to April</p>
+                    <p><strong>Local Contact:</strong> +960 330 0500</p>
+                    <p><strong>Emergency:</strong> +960 999</p>
+                    <p><strong>Currency:</strong> Maldivian Rufiyaa (MVR)</p>
+                    <p><strong>Language:</strong> Dhivehi, English</p>
+                </div>
+                <div class="contact-info">
+                    <h4><i class="fas fa-mountain"></i> Swiss Alps</h4>
+                    <p><strong>Best Time to Visit:</strong> December to March (Skiing), June to August (Hiking)</p>
+                    <p><strong>Local Contact:</strong> +41 27 966 8100</p>
+                    <p><strong>Emergency:</strong> 112</p>
+                    <p><strong>Currency:</strong> Swiss Franc (CHF)</p>
+                    <p><strong>Language:</strong> German, French, Italian</p>
+                </div>
+                <div class="contact-info">
+                    <h4><i class="fas fa-torii-gate"></i> Tokyo, Japan</h4>
+                    <p><strong>Best Time to Visit:</strong> March to May, September to November</p>
+                    <p><strong>Local Contact:</strong> +81 3 5321 1111</p>
+                    <p><strong>Emergency:</strong> 110 (Police), 119 (Fire/Medical)</p>
+                    <p><strong>Currency:</strong> Japanese Yen (JPY)</p>
+                    <p><strong>Language:</strong> Japanese</p>
+                </div>
+                <div class="contact-info">
+                    <h4><i class="fas fa-umbrella-beach"></i> Sri Lanka</h4>
+                    <p><strong>Best Time to Visit:</strong> December to March (West/South), April to September (East/North)</p>
+                    <p><strong>Local Contact:</strong> +94 11 2421 052</p>
+                    <p><strong>Emergency:</strong> 119</p>
+                    <p><strong>Currency:</strong> Sri Lankan Rupee (LKR)</p>
+                    <p><strong>Language:</strong> Sinhala, Tamil, English</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div id="contact" class="section-content" style="display: none;">
+        <div class="contact-section">
+            <h2 class="section-title">Contact Us</h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>Get in Touch</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Beach Road, Colombo, Sri Lanka</p>
+                    <p><i class="fas fa-phone"></i> +94 77 123 4567</p>
+                    <p><i class="fas fa-envelope"></i> info@tropicalescape.com</p>
+                    <p><i class="fas fa-clock"></i> Mon - Fri: 9:00 AM - 6:00 PM</p>
+                    <h4 style="margin-top: 30px;">Regional Offices</h4>
+                    <p><strong>Maldives:</strong> +960 330 0500</p>
+                    <p><strong>Japan:</strong> +81 3 5321 1111</p>
+                    <p><strong>Switzerland:</strong> +41 27 966 8100</p>
+                </div>
+                <div class="contact-form">
+                    <h3>Send us a Message</h3>
+                    <form id="contactForm">
+                        <input type="text" placeholder="Your Name" required id="contactName">
+                        <input type="email" placeholder="Your Email" required id="contactEmail">
+                        <input type="text" placeholder="Subject" required id="contactSubject">
+                        <textarea rows="5" placeholder="Your Message" required id="contactMessage"></textarea>
+                        <button type="submit" class="send-btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Trip Log Section -->
+    <div id="trip-log" class="section-content" style="display: none;">
+        <div class="trip-log">
+            <h2 class="section-title">My Trip Log</h2>
+            <div id="log-entries">
+                <!-- Log entries will be generated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div class="modal" id="bookingModal">
+        <div class="modal-content">
+            <button class="close" onclick="closeBookingModal()" aria-label="Close">&times;</button>
+            <div class="booking-container">
+                <div class="booking-form-container">
+                    <h2 id="booking-title">Booking Details</h2>
+                    <form id="bookingForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="fullName">Full Name</label>
+                                <input type="text" id="fullName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" required readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="checkIn">Check-in Date</label>
+                                <input type="date" id="checkIn" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="checkOut">Check-out Date</label>
+                                <input type="date" id="checkOut" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="guests">Number of Guests</label>
+                                <select id="guests" required>
+                                    <option value="1">1 Guest</option>
+                                    <option value="2" selected>2 Guests</option>
+                                    <option value="3">3 Guests</option>
+                                    <option value="4">4 Guests</option>
+                                    <option value="5">5+ Guests</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="total-cost">Total Price</label>
+                            <input type="text" id="total-cost" readonly style="background: #f5f5f5; font-weight: bold; color: #2e7d32;" value="$0.00">
+                        </div>
+                        <button type="button" class="add-to-cart-btn" onclick="handleAddToCart()">Add to Cart</button>
+                        <button type="button" class="pay-now-btn" onclick="openPaymentModal()" style="background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%); margin-top: 10px;">Pay Now</button>
+                    </form>
+                </div>
+                <div class="booking-summary-container">
+                    <h3 style="color: #1a237e; margin-bottom: 20px;">Booking Summary</h3>
+                    <div class="summary-card" id="booking-summary">
+                        <!-- Dynamic content will be inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="payment-modal">
+        <div class="payment-container">
+            <button class="close" onclick="closePaymentModal()" aria-label="Close" style="position: absolute; top: 15px; right: 20px; z-index: 1002; background: none; border: none; color: #aaa; font-size: 28px; cursor: pointer;">&times;</button>
+
+            <div class="payment-left-panel">
+                <div class="payment-logo">
+                    <i class="fas fa-lock"></i> Secure Payment
+                </div>
+
+                <div class="card-image">
+                    <div class="card-chip"></div>
+                    <div class="card-number" id="displayCardNumber">•••• •••• •••• 1234</div>
+                    <div class="card-details">
+                        <div class="card-holder" id="displayCardHolder">JOHN DOE</div>
+                        <div class="card-expiry" id="displayCardExpiry">12/25</div>
+                    </div>
+                </div>
+
+                <div class="payment-features">
+                    <div class="payment-feature">
+                        <i class="fas fa-shield-alt"></i>
+                        <div>SSL Encrypted<br><small>Bank-level security</small></div>
+                    </div>
+                    <div class="payment-feature">
+                        <i class="fas fa-credit-card"></i>
+                        <div>Multiple Cards<br><small>Visa, MasterCard, Amex</small></div>
+                    </div>
+                    <div class="payment-feature">
+                        <i class="fas fa-clock"></i>
+                        <div>Instant Processing<br><small>Payment confirmed in seconds</small></div>
+                    </div>
+                    <div class="payment-feature">
+                        <i class="fas fa-headset"></i>
+                        <div>24/7 Support<br><small>Help available anytime</small></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="payment-right-panel">
+                <form class="payment-form" id="paymentForm">
+                    <h2>Complete Your Payment</h2>
+
+                    <div id="paymentSummary" style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px; text-align: center;">
+                        <h3 id="paymentItemName" style="color: #1a237e; margin-bottom: 10px;">Loading...</h3>
+                        <p id="paymentDetails" style="color: #666; margin-bottom: 15px;">Loading booking details...</p>
+                        <div style="font-size: 24px; font-weight: bold; color: #4776E6;">
+                            Total: $<span id="paymentAmount">0.00</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="card-number">Card Number</label>
+                        <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19" required>
+                    </div>
+
+                    <div class="card-icons">
+                        <div class="card-icon">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" style="filter: grayscale(100%); opacity: 0.7;">
+                        </div>
+                        <div class="card-icon">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" style="filter: grayscale(100%); opacity: 0.7;">
+                        </div>
+                        <div class="card-icon">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/American_Express_logo_%282018%29.svg" alt="American Express" style="filter: grayscale(100%); opacity: 0.7;">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="card-name">Name on Card</label>
+                        <input type="text" id="card-name" placeholder="John Doe" required>
+                    </div>
+
+                    <div class="payment-row">
+                        <div class="form-group">
+                            <label for="expiry">Expiry Date</label>
+                            <input type="text" id="expiry" placeholder="MM/YY" maxlength="5" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cvv">CVV</label>
+                            <input type="text" id="cvv" placeholder="123" maxlength="3" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="pay-now-btn" id="payNowButton">
+                        <i class="fas fa-lock"></i> Pay Securely Now
+                    </button>
+
+                    <div class="secure">
+                        <i class="fas fa-lock"></i>
+                        <span>Your payment information is protected with 256-bit SSL encryption</span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Chat -->
+    <div class="chat-container">
+        <button class="chat-toggle" onclick="toggleChat()" title="Chat with Assistant">
+            <i class="fas fa-comments"></i>
+        </button>
+        <div class="chat-window" id="chatWindow">
+            <div class="chat-header">
+                <div style="display: flex; align-items: center;">
+                    <i class="fas fa-globe-asia" style="margin-right: 10px;"></i>
+                    <span>Travel Assistant</span>
+                </div>
+                <button style="background: none; border: none; color: white; font-size: 18px; cursor: pointer;" onclick="toggleChat()" title="Close chat">×</button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message ai-message">
+                    <p>Hello! I'm your AI travel assistant. How can I help you plan your perfect trip today?</p>
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" placeholder="Type your message..." id="chatInput" onkeypress="handleChatKeyPress(event)">
+                <button onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>We are a premium travel service dedicated to providing unforgettable experiences in the most beautiful destinations around the world.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#" onclick="showSection('home')">Home</a></li>
+                    <li><a href="#" onclick="showSection('destinations')">Destinations</a></li>
+                    <li><a href="#" onclick="showSection('contact')">Contact</a></li>
+                    <li><a href="#" onclick="showSection('trip-log')">My Booking</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Beach Road, Colombo, Sri Lanka</p>
+                <p><i class="fas fa-phone"></i> +94 77 123 4567</p>
+                <p><i class="fas fa-envelope"></i> info@tropicalescape.com</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Tropical Escape. All rights reserved.</p>
+        </div>
+    </footer>
+</div>
+
+<!-- Notification Container -->
+<div id="notification" class="notification"></div>
+
+<script>
+    // ================== CONFIGURATION ==================
+    const API_BASE = "http://localhost:8080/api";
+    let currentData = [];
+    let currentSection = 'home';
+    let currentUser = null;
+    let currentBookingData = null;
+    let currentPaymentBooking = null;
+
+    // Sample data for fallback
+    const sampleData = {
+        hotels: [
+            {
+                id: 1,
+                name: "Tropical Paradise Resort",
+                location: "Maldives",
+                pricePerNight: 250,
+                description: "Luxury overwater bungalows with private pools and direct ocean access.",
+                imageUrl: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 2,
+                name: "Mountain View Lodge",
+                location: "Swiss Alps",
+                pricePerNight: 180,
+                description: "Cozy alpine lodge with stunning mountain views and spa facilities.",
+                imageUrl: "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 3,
+                name: "Urban Retreat Hotel",
+                location: "Tokyo, Japan",
+                pricePerNight: 220,
+                description: "Modern hotel in the heart of Tokyo with traditional Japanese amenities.",
+                imageUrl: "https://images.unsplash.com/photo-1551641506-ee5bf4cb45f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            }
+        ],
+        tours: [
+            {
+                id: 1,
+                destination: "Sigiriya Rock Fortress",
+                description: "Full-day tour to the ancient rock fortress with a local guide.",
+                price: 75,
+                durationDays: 1,
+                imageUrl: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 2,
+                destination: "Tea Plantations Experience",
+                description: "Visit tea factories and learn about Ceylon tea production.",
+                price: 60,
+                durationDays: 1,
+                imageUrl: "https://images.unsplash.com/photo-1597693928386-252c78a11e3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 3,
+                destination: "Wildlife Safari",
+                description: "Yala National Park safari to see elephants, leopards and more.",
+                price: 90,
+                durationDays: 1,
+                imageUrl: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            }
+        ],
+        transports: [
+            {
+                id: 1,
+                type: "Car",
+                provider: "Luxury Sedan Service",
+                price: 50,
+                description: "Comfortable private car with professional driver for city transfers.",
+                imageUrl: "https://images.unsplash.com/photo-1542362567-b07e54358753?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 2,
+                type: "Flight",
+                provider: "Domestic Airways",
+                price: 120,
+                description: "Scenic domestic flights between major destinations.",
+                imageUrl: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 3,
+                type: "Train",
+                provider: "Scenic Railway",
+                price: 35,
+                description: "Picturesque train journeys through mountains and tea country.",
+                imageUrl: "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            }
+        ]
+    };
+
+    // ================== UTILITY FUNCTIONS ==================
+    function showLoading(show) {
+        const overlay = document.getElementById('loadingOverlay');
+        if (overlay) {
+            overlay.classList.toggle('show', show);
+        }
+    }
+
+    function showNotification(message, type = 'success') {
+        const notification = document.getElementById('notification');
+        if (!notification) return;
+
+        notification.textContent = message;
+        notification.className = `notification ${type}`;
+        notification.classList.add('show');
+
+        setTimeout(() => notification.classList.remove('show'), 5000);
+    }
+
+    // ================== ENHANCED API REQUEST HELPER ==================
+    async function apiRequest(endpoint, options = {}) {
+        try {
+            let token = localStorage.getItem('authToken');
+
+            const defaultHeaders = {
+                'Content-Type': 'application/json',
+                ...(token && { 'Authorization': `Bearer ${token}` })
+            };
+
+            const config = {
+                ...options,
+                headers: {
+                    ...defaultHeaders,
+                    ...options.headers
+                },
+                credentials: 'include'
+            };
+
+            console.log(`Making API request to: ${API_BASE}${endpoint}`, { hasToken: !!token });
+
+            let response = await fetch(`${API_BASE}${endpoint}`, config);
+
+            // Handle 401 - try to refresh token
+            if (response.status === 401) {
+                console.log('Token expired, attempting refresh...');
+                const newToken = await refreshAuthToken();
+
+                if (newToken) {
+                    // Retry with new token
+                    token = newToken;
+                    config.headers.Authorization = `Bearer ${token}`;
+                    response = await fetch(`${API_BASE}${endpoint}`, config);
+                }
+            }
+
+            // Handle 401 after refresh attempt
+            if (response.status === 401) {
+                console.warn('Unauthorized after refresh - clearing auth data');
+                localStorage.removeItem('currentUser');
+                localStorage.removeItem('authToken');
+                showNotification('Session expired. Please log in again.', 'warning');
+                setTimeout(() => window.location.href = 'index.html', 2000);
+                throw new Error('Authentication required');
+            }
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error(`API Error ${response.status}: ${endpoint}`, errorText);
+                throw new Error(`HTTP ${response.status}: ${errorText || response.statusText}`);
+            }
+
+            const contentType = response.headers.get("content-type");
+            if (!contentType || !contentType.includes("application/json")) {
+                return response.text();
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error(`API request failed: ${endpoint}`, error);
+            throw error;
+        }
+    }
+
+    // ================== TOKEN MANAGEMENT ==================
+    async function refreshAuthToken() {
+        try {
+            const response = await fetch(`${API_BASE}/auth/refresh`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            if (response.ok) {
+                const { token } = await response.json();
+                localStorage.setItem('authToken', token);
+                return token;
+            }
+            return null;
+        } catch (error) {
+            console.warn('Token refresh failed:', error);
+            return null;
+        }
+    }
+
+    async function validateAuthToken(token) {
+        try {
+            const response = await fetch(`${API_BASE}/auth/validate`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ token })
+            });
+
+            if (response.ok) {
+                return await response.json();
+            }
+            return { valid: false };
+        } catch (error) {
+            console.warn('Token validation failed:', error);
+            return { valid: false };
+        }
+    }
+
+    // ================== ENHANCED USER AUTHENTICATION ==================
+    async function initializeUser() {
+        try {
+            showLoading(true);
+            console.log('Starting user initialization...');
+
+            // Check localStorage first
+            const storedUser = localStorage.getItem('currentUser');
+            const storedToken = localStorage.getItem('authToken');
+
+            if (storedUser && storedToken) {
+                try {
+                    currentUser = JSON.parse(storedUser);
+
+                    // Validate token with API
+                    console.log('Validating stored token...');
+                    const tokenResponse = await validateAuthToken(storedToken);
+
+                    if (tokenResponse.valid) {
+                        // Set token for API calls
+                        localStorage.setItem('authToken', tokenResponse.token || storedToken);
+                        displayUserProfile(currentUser);
+                        showNotification(`Welcome back, ${currentUser.username}!`, 'success');
+                        console.log('User authenticated from localStorage');
+                        return true;
+                    } else {
+                        // Token invalid, clear storage
+                        console.log('Stored token invalid, clearing storage');
+                        localStorage.removeItem('currentUser');
+                        localStorage.removeItem('authToken');
+                    }
+                } catch (e) {
+                    console.warn('Stored user data invalid:', e);
+                    localStorage.removeItem('currentUser');
+                    localStorage.removeItem('authToken');
+                }
+            }
+
+            // Try API authentication with credentials
+            console.log('Attempting API authentication...');
+            try {
+                const response = await fetch(`${API_BASE}/auth/me`, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('authToken') || ''}`
+                    }
+                });
+
+                if (response.ok) {
+                    currentUser = await response.json();
+
+                    // Store user and token
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    const token = response.headers.get('Authorization') || localStorage.getItem('authToken');
+                    if (token) {
+                        localStorage.setItem('authToken', token.replace('Bearer ', ''));
+                    }
+
+                    displayUserProfile(currentUser);
+                    showNotification(`Welcome back, ${currentUser.username}!`, 'success');
+                    console.log('User authenticated via API');
+                    return true;
+                } else if (response.status === 401) {
+                    console.log('User not authenticated, redirecting to login');
+                    showNotification('Session expired. Please log in again.', 'warning');
+                    setTimeout(() => window.location.href = 'index.html', 2000);
+                    return false;
+                }
+            } catch (error) {
+                console.warn('API auth failed:', error);
+            }
+
+            // No user found, redirect to login
+            console.log('No user found, redirecting to login');
+            showNotification('Please log in to continue', 'error');
+            setTimeout(() => window.location.href = 'index.html', 2000);
+            return false;
+
+        } catch (error) {
+            console.error('User initialization error:', error);
+            handleError(error, 'User initialization');
+            setTimeout(() => window.location.href = 'index.html', 2000);
+            return false;
+        } finally {
+            showLoading(false);
+        }
+    }
+
+    function displayUserProfile(user) {
+        const userProfile = document.getElementById('userProfile');
+        const userName = document.getElementById('userName');
+        const userEmail = document.getElementById('userEmail');
+
+        if (user && userProfile && userName && userEmail) {
+            userName.textContent = user.username || user.name || 'User';
+            userEmail.textContent = user.email || '';
+            userProfile.style.display = 'flex';
+        }
+    }
+
+    async function handleLogout() {
+        try {
+            // Try API logout
+            await fetch(`${API_BASE}/auth/logout`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('authToken') || ''}`
+                }
+            }).catch(() => {}); // Ignore logout errors
+
+            // Clear storage
+            localStorage.removeItem('currentUser');
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('cart');
+
+            showNotification('Successfully logged out!', 'success');
+            setTimeout(() => window.location.href = 'index.html', 1500);
+        } catch (error) {
+            console.error('Logout error:', error);
+            // Clear storage anyway
+            localStorage.removeItem('currentUser');
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('cart');
+            showNotification('Logged out successfully!', 'success');
+            setTimeout(() => window.location.href = 'index.html', 1500);
+        }
+    }
+
+    // ================== ERROR HANDLING ==================
+    function handleError(error, context = 'Operation', showUser = true) {
+        console.error(`${context} error:`, error);
+
+        if (showUser) {
+            const message = error.message || 'An unexpected error occurred';
+            showNotification(`${context} failed: ${message}`, 'error');
+        }
+
+        // Log to server if available and user is authenticated
+        if (currentUser && localStorage.getItem('authToken')) {
+            try {
+                apiRequest('/logs/error', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        error: error.message,
+                        context: context,
+                        timestamp: new Date().toISOString(),
+                        userId: currentUser?.id,
+                        userEmail: currentUser?.email
+                    })
+                }).catch(() => {}); // Silent fail for logging
+            } catch (logError) {
+                console.error('Failed to log error:', logError);
+            }
+        }
+    }
+
+    // ================== SECTION NAVIGATION ==================
+    function showSection(sectionId) {
+        document.querySelectorAll('.section-content').forEach(section => {
+            section.style.display = 'none';
+        });
+
+        const targetSection = document.getElementById(sectionId);
+        if (targetSection) {
+            targetSection.style.display = 'block';
+            currentSection = sectionId;
+        }
+
+        if (sectionId === 'trip-log') {
+            loadTripLog();
+        }
+    }
+
+    // ================== TAB FUNCTIONALITY ==================
+    function showTab(tabName, clickedElement) {
+        // Update tab content
+        document.querySelectorAll('.tab-content').forEach(tab => {
+            tab.classList.remove('active');
+        });
+        document.getElementById(tabName).classList.add('active');
+
+        // Update active tab styling
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.classList.remove('active');
+        });
+        if (clickedElement) {
+            clickedElement.classList.add('active');
+        }
+
+        loadData(tabName);
+    }
+
+    // ================== DATA LOADING ==================
+    async function loadData(type) {
+        const container = document.querySelector(`#${type} .cards-container`);
+        if (!container) return;
+
+        container.innerHTML = `
+            <div style="text-align: center; padding: 60px; grid-column: 1 / -1;">
+                <i class="fas fa-spinner fa-spin" style="font-size: 40px; color: rebeccapurple; margin-bottom: 20px;"></i>
+                <p>Loading ${type}...</p>
+            </div>
+        `;
+
+        try {
+            // Try API first with auth
+            console.log(`Loading ${type} from API...`);
+            currentData = await apiRequest(`/${type}`);
+            console.log(`Loaded ${currentData.length} ${type} from API`);
+        } catch (error) {
+            console.warn(`Failed to load ${type} from API:`, error);
+            showNotification(`Using sample ${type} data due to connection issues`, 'warning');
+            currentData = sampleData[type] || [];
+        }
+
+        renderCards(currentData, type);
+    }
+
+    function renderCards(data, type) {
+        const container = document.querySelector(`#${type} .cards-container`);
+        if (!container) return;
+
+        container.innerHTML = '';
+
+        if (data.length === 0) {
+            container.innerHTML = '<p style="text-align: center; grid-column: 1 / -1; color: #666; padding: 40px;">No items found.</p>';
+            return;
+        }
+
+        data.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <div class="card-img">
+                    <img src="${item.imageUrl || 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'}"
+                         alt="${item.name || item.destination || item.type}"
+                         onerror="this.src='https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">${item.name || item.destination || item.type}</h3>
+                    <p class="card-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        ${item.location || item.provider || 'Various locations'}
+                    </p>
+                    <p class="card-description">${item.description || ''}</p>
+                    <p class="card-price">$${parseFloat(item.pricePerNight || item.price || 0).toFixed(2)}</p>
+                    <button class="card-button" onclick="openBookingModal('${type.slice(0, -1)}', ${item.id})">
+                        <i class="fas fa-calendar-check"></i> Book Now
+                    </button>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    // ================== SEARCH FUNCTIONALITY ==================
+    function performSearch() {
+        const searchInput = document.getElementById('searchInput');
+        if (!searchInput) return;
+
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        if (!searchTerm) return;
+
+        const filteredData = currentData.filter(item => {
+            const searchableText = [
+                item.name || item.destination || item.type || '',
+                item.location || item.provider || '',
+                item.description || ''
+            ].join(' ').toLowerCase();
+            return searchableText.includes(searchTerm);
+        });
+
+        const activeTab = document.querySelector('.tab-content.active');
+        if (activeTab) {
+            const tabId = activeTab.id;
+            renderCards(filteredData, tabId);
+            showNotification(`Found ${filteredData.length} results for "${searchTerm}"`, 'success');
+        }
+    }
+
+    // ================== BOOKING MODAL ==================
+    function openBookingModal(type, itemId) {
+        try {
+            if (!currentUser) {
+                showNotification('Please log in to book services', 'error');
+                setTimeout(() => window.location.href = 'index.html', 2000);
+                return;
+            }
+
+            const item = currentData.find(i => i.id === itemId);
+            if (!item) {
+                throw new Error('Service not found. Please try again.');
+            }
+
+            // Set up booking data
+            currentBookingData = {
+                type: type,
+                itemId: itemId,
+                basePrice: parseFloat(item.pricePerNight || item.price),
+                itemName: item.name || item.destination || item.type,
+                totalPrice: 0,
+                fullName: currentUser.username || currentUser.name || '',
+                email: currentUser.email || '',
+                checkIn: new Date().toISOString().split('T')[0],
+                checkOut: '',
+                guests: 2,
+                imageUrl: item.imageUrl
+            };
+
+            // Update modal content
+            document.getElementById('booking-title').textContent = `Book ${item.name || item.destination || item.type}`;
+
+            document.getElementById('booking-summary').innerHTML = `
+                <div class="summary-header">
+                    <img src="${item.imageUrl || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'}"
+                         alt="${item.name || item.destination || item.type}"
+                         onerror="this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                    <div class="summary-details">
+                        <h3>${item.name || item.destination || item.type}</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> ${item.location || item.provider || 'Various locations'}</p>
+                    </div>
+                </div>
+                <div class="price-details">
+                    <div class="price-row">
+                        <span>Base Price</span>
+                        <span>$${currentBookingData.basePrice.toFixed(2)}</span>
+                    </div>
+                    <div class="price-row">
+                        <span>Taxes & Fees</span>
+                        <span>$0.00</span>
+                    </div>
+                    <div class="total-cost-display">
+                        Total Cost: $<span id="total-cost-display">0.00</span>
+                    </div>
+                </div>
+            `;
+
+            // Fill form fields
+            document.getElementById('fullName').value = currentUser.username || currentUser.name || '';
+            document.getElementById('email').value = currentUser.email || '';
+            document.getElementById('checkIn').value = currentBookingData.checkIn;
+            document.getElementById('checkOut').value = '';
+            document.getElementById('guests').value = currentBookingData.guests;
+            document.getElementById('total-cost').value = '$0.00';
+
+            // Setup event listeners
+            setupBookingFormListeners();
+            calculateTotalCost();
+
+            // Show modal
+            document.getElementById('bookingModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+
+        } catch (error) {
+            handleError(error, 'Opening booking modal');
+        }
+    }
+
+    function setupBookingFormListeners() {
+        // Remove existing listeners to prevent duplicates
+        const inputs = ['checkIn', 'checkOut', 'guests'];
+        inputs.forEach(id => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.removeEventListener('change', calculateTotalCost);
+                element.addEventListener('change', calculateTotalCost);
+            }
+        });
+    }
+
+    function calculateTotalCost() {
+        try {
+            if (!currentBookingData || !currentBookingData.basePrice) return;
+
+            const basePrice = parseFloat(currentBookingData.basePrice);
+            const checkInValue = document.getElementById('checkIn')?.value || '';
+            const checkOutValue = document.getElementById('checkOut')?.value || '';
+            const guestsValue = parseInt(document.getElementById('guests')?.value) || 1;
+            const type = currentBookingData.type;
+
+            let total = basePrice;
+            let nights = 1;
+            let breakdown = '';
+
+            if (type === 'hotel' && checkInValue && checkOutValue) {
+                const checkIn = new Date(checkInValue);
+                const checkOut = new Date(checkOutValue);
+
+                if (checkOut > checkIn) {
+                    const timeDiff = checkOut.getTime() - checkIn.getTime();
+                    nights = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+                    total = basePrice * nights * guestsValue;
+                    breakdown = `${nights} night${nights > 1 ? 's' : ''} × $${basePrice.toFixed(2)} × ${guestsValue} guest${guestsValue > 1 ? 's' : ''}`;
+                } else {
+                    total = basePrice * guestsValue;
+                    breakdown = `$${basePrice.toFixed(2)} × ${guestsValue} guest${guestsValue > 1 ? 's' : ''}`;
+                }
+            } else {
+                total = basePrice * guestsValue;
+                breakdown = `$${basePrice.toFixed(2)} × ${guestsValue} guest${guestsValue > 1 ? 's' : ''}`;
+            }
+
+            const taxes = total * 0.1;
+            const finalTotal = total + taxes;
+
+            // Update display
+            document.getElementById('total-cost-display').textContent = finalTotal.toFixed(2);
+            document.getElementById('total-cost').value = `$${finalTotal.toFixed(2)}`;
+
+            const priceRow = document.querySelector('#booking-summary .price-row:first-child');
+            const taxesRow = document.querySelector('#booking-summary .price-row:nth-child(2)');
+
+            if (priceRow) {
+                priceRow.innerHTML = `<span>${breakdown}</span><span>$${total.toFixed(2)}</span>`;
+            }
+            if (taxesRow) {
+                taxesRow.innerHTML = `<span>Taxes & Fees (10%)</span><span>$${taxes.toFixed(2)}</span>`;
+            }
+
+            // Update booking data
+            currentBookingData.totalPrice = finalTotal;
+            currentBookingData.guests = guestsValue;
+            currentBookingData.checkIn = checkInValue;
+            currentBookingData.checkOut = checkOutValue || null;
+
+        } catch (error) {
+            handleError(error, 'Calculating total cost', false);
+        }
+    }
+
+    function closeBookingModal() {
+        document.getElementById('bookingModal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+        currentBookingData = null;
+    }
+
+    // ================== PAYMENT MODAL ==================
+    function openPaymentModal(booking = null) {
+        try {
+            if (!currentUser) {
+                showNotification('Please log in to make payments', 'error');
+                return;
+            }
+
+            let bookingData = booking;
+
+            // If no booking provided, use currentBookingData
+            if (!bookingData && currentBookingData) {
+                bookingData = currentBookingData;
+            }
+
+            if (!bookingData) {
+                throw new Error('No booking selected for payment');
+            }
+
+            // Store current booking for payment
+            currentPaymentBooking = bookingData;
+
+            // Populate payment summary
+            document.getElementById('paymentItemName').textContent = bookingData.itemName;
+            document.getElementById('paymentDetails').innerHTML = `
+                <strong>${bookingData.type?.charAt(0).toUpperCase() + bookingData.type?.slice(1) || 'Booking'}</strong><br>
+                ${bookingData.guests} guest${bookingData.guests > 1 ? 's' : ''} •
+                ${bookingData.checkIn} ${bookingData.checkOut ? `to ${bookingData.checkOut}` : ''}
+            `;
+            document.getElementById('paymentAmount').textContent = bookingData.totalPrice.toFixed(2);
+
+            // Pre-fill form with user data
+            document.getElementById('card-name').value = currentUser.username || currentUser.name || '';
+
+            // Setup payment form listeners
+            setupPaymentForm();
+            updateCardDisplay();
+
+            // Close booking modal if open
+            closeBookingModal();
+
+            // Show payment modal
+            document.getElementById('paymentModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+
+        } catch (error) {
+            handleError(error, 'Opening payment modal');
+        }
+    }
+
+    function closePaymentModal() {
+        document.getElementById('paymentModal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+        document.getElementById('paymentForm').reset();
+        currentPaymentBooking = null;
+        updateCardDisplay();
+    }
+
+    function setupPaymentForm() {
+        // Remove existing listeners
+        const form = document.getElementById('paymentForm');
+        const cardNumber = document.getElementById('card-number');
+        const expiry = document.getElementById('expiry');
+        const cvv = document.getElementById('cvv');
+        const cardName = document.getElementById('card-name');
+
+        // Clear existing listeners
+        [cardNumber, expiry, cvv, cardName].forEach(el => {
+            if (el) el.value = '';
+        });
+
+        // Card number formatting
+        if (cardNumber) {
+            cardNumber.addEventListener('input', function() {
+                let value = this.value.replace(/\D/g, '');
+                if (value.length > 16) value = value.slice(0, 16);
+
+                let formattedValue = '';
+                for (let i = 0; i < value.length; i++) {
+                    if (i > 0 && i % 4 === 0) formattedValue += ' ';
+                    formattedValue += value[i];
+                }
+                this.value = formattedValue;
+                updateCardDisplay();
+            });
+        }
+
+        // Expiry date formatting
+        if (expiry) {
+            expiry.addEventListener('input', function() {
+                let value = this.value.replace(/\D/g, '');
+                if (value.length > 4) value = value.slice(0, 4);
+                if (value.length >= 2) {
+                    value = value.slice(0, 2) + '/' + value.slice(2);
+                }
+                this.value = value;
+                updateCardDisplay();
+            });
+        }
+
+        // CVV formatting
+        if (cvv) {
+            cvv.addEventListener('input', function() {
+                let value = this.value.replace(/\D/g, '');
+                if (value.length > 3) value = value.slice(0, 3);
+                this.value = value;
+                updateCardDisplay();
+            });
+        }
+
+        // Cardholder name
+        if (cardName) {
+            cardName.addEventListener('input', updateCardDisplay);
+            cardName.value = currentUser?.username || currentUser?.name || '';
+        }
+
+        // Form submission
+        if (form) {
+            form.removeEventListener('submit', handlePaymentSubmission);
+            form.addEventListener('submit', handlePaymentSubmission);
+        }
+    }
+
+    function updateCardDisplay() {
+        const cardNumberDisplay = document.getElementById('displayCardNumber');
+        const cardHolderDisplay = document.getElementById('displayCardHolder');
+        const expiryDisplay = document.getElementById('displayCardExpiry');
+
+        const cardNumber = document.getElementById('card-number')?.value || '';
+        const cardName = document.getElementById('card-name')?.value || currentUser?.username || currentUser?.name || 'JOHN DOE';
+        const expiry = document.getElementById('expiry')?.value || '12/25';
+
+        if (cardNumberDisplay) {
+            const last4 = cardNumber.replace(/\s/g, '').slice(-4) || '1234';
+            cardNumberDisplay.textContent = `•••• •••• •••• ${last4}`;
+        }
+        if (cardHolderDisplay) {
+            cardHolderDisplay.textContent = cardName.toUpperCase();
+        }
+        if (expiryDisplay) {
+            expiryDisplay.textContent = expiry || '12/25';
+        }
+    }
+
+    // ================== PAYMENT PROCESSING ==================
+    async function handlePaymentSubmission(event) {
+        event.preventDefault();
+
+        if (!currentPaymentBooking) {
+            showNotification('No booking selected for payment', 'error');
+            return;
+        }
+
+        const payButton = document.getElementById('payNowButton');
+        const originalText = payButton.innerHTML;
+        payButton.disabled = true;
+        payButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing Payment...';
+
+        try {
+            showLoading(true);
+
+            // Validate form
+            const cardNumber = document.getElementById('card-number').value.replace(/\s/g, '');
+            const cardName = document.getElementById('card-name').value.trim();
+            const expiry = document.getElementById('expiry').value;
+            const cvv = document.getElementById('cvv').value;
+
+            if (!cardNumber || cardNumber.length < 13 || !cardName || !expiry || !cvv) {
+                throw new Error('Please complete all payment fields');
+            }
+
+            // Basic card validation
+            if (!/^\d{13,19}$/.test(cardNumber)) {
+                throw new Error('Please enter a valid card number');
+            }
+
+            if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(expiry)) {
+                throw new Error('Please enter a valid expiry date');
+            }
+
+            if (!/^\d{3,4}$/.test(cvv)) {
+                throw new Error('Please enter a valid CVV');
+            }
+
+            // Create booking payload
+            const bookingPayload = {
+                fullName: currentPaymentBooking.fullName || currentUser.username || currentUser.name,
+                email: currentUser.email,
+                userId: currentUser.id,
+                checkIn: currentPaymentBooking.checkIn,
+                checkOut: currentPaymentBooking.checkOut || null,
+                guests: currentPaymentBooking.guests || 1,
+                bookingType: currentPaymentBooking.type || currentPaymentBooking.bookingType,
+                itemId: currentPaymentBooking.itemId,
+                itemName: currentPaymentBooking.itemName,
+                basePrice: currentPaymentBooking.basePrice,
+                totalPrice: currentPaymentBooking.totalPrice,
+                status: 'CONFIRMED',
+                cardDetails: {
+                    last4: cardNumber.slice(-4),
+                    cardholder: cardName,
+                    expiry: expiry,
+                    type: getCardType(cardNumber)
+                }
+            };
+
+            console.log('Sending booking payload:', bookingPayload);
+
+            // Use API helper
+            const confirmedBooking = await apiRequest('/bookings', {
+                method: 'POST',
+                body: JSON.stringify(bookingPayload)
+            });
+
+            console.log('Booking confirmed:', confirmedBooking);
+
+            // Remove from cart if it was there
+            const cart = getCart();
+            const updatedCart = cart.filter(b =>
+                !(b.itemId === currentPaymentBooking.itemId &&
+                    b.email === currentUser.email &&
+                    b.createdAt === currentPaymentBooking.createdAt)
+            );
+            saveCart(updatedCart);
+
+            showNotification(`Payment successful! Booking confirmed for ${currentPaymentBooking.itemName}. Confirmation email sent!`, 'success');
+            closePaymentModal();
+
+            // Refresh trip log if viewing
+            if (currentSection === 'trip-log') {
+                setTimeout(() => loadTripLog(), 1000);
+            }
+
+        } catch (error) {
+            handleError(error, 'Payment processing');
+        } finally {
+            payButton.disabled = false;
+            payButton.innerHTML = originalText;
+            showLoading(false);
+        }
+    }
+
+    function getCardType(cardNumber) {
+        const cardNumberStr = cardNumber.replace(/\s/g, '');
+        if (/^4/.test(cardNumberStr)) return 'Visa';
+        if (/^5[1-5]/.test(cardNumberStr)) return 'MasterCard';
+        if (/^3[47]/.test(cardNumberStr)) return 'American Express';
+        return 'Unknown';
+    }
+
+    // ================== CART MANAGEMENT ==================
+    function getCart() {
+        try {
+            const cart = localStorage.getItem('cart');
+            return cart ? JSON.parse(cart) : [];
+        } catch (error) {
+            handleError(error, 'Reading cart', false);
+            return [];
+        }
+    }
+
+    function saveCart(cart) {
+        try {
+            localStorage.setItem('cart', JSON.stringify(cart));
+        } catch (error) {
+            handleError(error, 'Saving cart', false);
+        }
+    }
+
+    // ================== ADD TO CART ==================
+    async function handleAddToCart() {
+        try {
+            if (!currentUser || !currentBookingData) {
+                throw new Error('Please complete the booking form');
+            }
+
+            // Validate form
+            const checkIn = document.getElementById('checkIn').value;
+            const totalPrice = parseFloat(document.getElementById('total-cost').value.replace(/[^0-9.]/g, ''));
+
+            if (!checkIn || totalPrice <= 0) {
+                throw new Error('Please select dates and complete the form');
+            }
+
+            const bookingPayload = {
+                fullName: document.getElementById('fullName').value.trim(),
+                email: currentUser.email,
+                userId: currentUser.id,
+                checkIn: checkIn,
+                checkOut: document.getElementById('checkOut').value || null,
+                guests: parseInt(document.getElementById('guests').value),
+                bookingType: currentBookingData.type,
+                itemId: currentBookingData.itemId,
+                itemName: currentBookingData.itemName,
+                basePrice: currentBookingData.basePrice,
+                totalPrice: totalPrice,
+                status: 'CART',
+                createdAt: new Date().toISOString()
+            };
+
+            showLoading(true);
+
+            // Try to save to backend first
+            try {
+                await apiRequest('/bookings/cart', {
+                    method: 'POST',
+                    body: JSON.stringify(bookingPayload)
+                });
+                console.log('Cart item saved to backend');
+            } catch (apiError) {
+                console.warn('Failed to save cart to backend, using localStorage:', apiError);
+                // Fallback to localStorage
+            }
+
+            // Also save to localStorage as backup
+            const cart = getCart();
+            const uniqueId = `${bookingPayload.email}_${Date.now()}`;
+            const cartItem = { ...bookingPayload, cartId: uniqueId };
+            cart.push(cartItem);
+            saveCart(cart);
+
+            showNotification('Booking added to cart successfully!', 'success');
+            closeBookingModal();
+
+            if (currentSection === 'trip-log') {
+                setTimeout(() => loadTripLog(), 1000);
+            }
+
+        } catch (error) {
+            handleError(error, 'Adding to cart');
+        } finally {
+            showLoading(false);
+        }
+    }
+
+    // ================== TRIP LOG ==================
+    async function loadTripLog() {
+        if (!currentUser) {
+            const container = document.getElementById('log-entries');
+            if (container) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 60px; color: #666;">
+                        <i class="fas fa-user-lock" style="font-size: 64px; color: #ddd; margin-bottom: 20px;"></i>
+                        <h3 style="color: #999; margin-bottom: 10px;">Please log in</h3>
+                        <p>To view your bookings, please sign in to your account.</p>
+                    </div>
+                `;
+            }
+            return;
+        }
+
+        const container = document.getElementById('log-entries');
+        if (!container) return;
+
+        container.innerHTML = `
+            <div style="text-align: center; padding: 60px;">
+                <i class="fas fa-spinner fa-spin" style="font-size: 40px; color: rebeccapurple; margin-bottom: 20px;"></i>
+                <p>Loading your bookings...</p>
+            </div>
+        `;
+
+        try {
+            let confirmedBookings = [];
+            let cartBookings = [];
+
+            // Fetch confirmed bookings using API helper
+            try {
+                console.log('Fetching confirmed bookings...');
+                const allBookings = await apiRequest(`/bookings?userEmail=${encodeURIComponent(currentUser.email)}`);
+                confirmedBookings = allBookings.filter(booking =>
+                    booking.status === 'CONFIRMED' &&
+                    booking.email === currentUser.email
+                );
+                console.log(`Loaded ${confirmedBookings.length} confirmed bookings from database`);
+            } catch (error) {
+                console.warn('Database fetch failed, proceeding with cart only:', error);
+            }
+
+            // Get cart items from localStorage
+            cartBookings = getCart().filter(b =>
+                b.email === currentUser.email &&
+                b.status === 'CART'
+            );
+
+            const totalBookings = confirmedBookings.length + cartBookings.length;
+
+            if (totalBookings === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 80px; color: #666;">
+                        <i class="fas fa-plane-departure" style="font-size: 80px; color: #e3f2fd; margin-bottom: 20px;"></i>
+                        <h3 style="color: #999; margin-bottom: 15px;">No bookings yet</h3>
+                        <p style="margin-bottom: 30px;">Your travel adventures are waiting! Start planning your next trip.</p>
+                        <button onclick="showSection('home')" class="pay-now-btn" style="max-width: 200px; display: inline-block;">
+                            <i class="fas fa-search"></i> Explore Destinations
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+
+            // Display confirmed bookings
+            if (confirmedBookings.length > 0) {
+                html += `
+                    <div style="margin-bottom: 40px;">
+                        <h3 style="color: #4776E6; margin-bottom: 20px; border-bottom: 3px solid #e3f2fd; padding-bottom: 10px; display: flex; align-items: center;">
+                            <i class="fas fa-check-circle" style="color: #4CAF50; margin-right: 10px; font-size: 20px;"></i>
+                            Confirmed Bookings (${confirmedBookings.length})
+                        </h3>
+                `;
+
+                confirmedBookings.forEach(booking => {
+                    html += createBookingElementHTML(booking, 'confirmed');
+                });
+
+                html += '</div>';
+            }
+
+            // Display cart items
+            if (cartBookings.length > 0) {
+                const cartHeaderMargin = confirmedBookings.length > 0 ? 'margin-top: 40px;' : '';
+                html += `
+                    <div>
+                        <h3 style="color: #ff9800; margin-bottom: 20px; border-bottom: 3px solid #fff3e0; padding-bottom: 10px; display: flex; align-items: center; ${cartHeaderMargin}">
+                            <i class="fas fa-shopping-cart" style="margin-right: 10px; font-size: 20px;"></i>
+                            Shopping Cart (${cartBookings.length})
+                        </h3>
+                `;
+
+                cartBookings.forEach(booking => {
+                    html += createBookingElementHTML(booking, 'cart');
+                });
+
+                html += '</div>';
+            }
+
+            container.innerHTML = html;
+            console.log(`Rendered ${confirmedBookings.length} confirmed + ${cartBookings.length} cart bookings`);
+
+        } catch (error) {
+            handleError(error, 'Loading trip log');
+            container.innerHTML = `
+                <div style="text-align: center; padding: 60px; color: #666;">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 48px; color: #ff9800; margin-bottom: 20px;"></i>
+                    <h3 style="color: #999; margin-bottom: 10px;">Unable to load bookings</h3>
+                    <p>Please check your connection and try again.</p>
+                    <button onclick="loadTripLog()" class="pay-now-btn" style="max-width: 150px; display: inline-block; margin-top: 15px;">
+                        <i class="fas fa-refresh"></i> Retry
+                    </button>
+                </div>
+            `;
+        }
+    }
+
+    function createBookingElementHTML(booking, type) {
+        const statusBadgeClass = type === 'confirmed' ? 'confirmed' : 'pending';
+        const statusIcon = type === 'confirmed' ? 'fa-check-circle' : 'fa-clock';
+        const statusColor = type === 'confirmed' ? '#4CAF50' : '#ff9800';
+
+        const paymentButton = type === 'cart' ? `
+            <button onclick="openPaymentModal(${JSON.stringify(booking).replace(/"/g, '&quot;')})"
+                    style="background: linear-gradient(135deg, #4776E6 0%, #8E54E9 100%); color: white; border: none; border-radius: 6px; padding: 10px 20px; cursor: pointer; font-size: 14px; margin-right: 10px; display: flex; align-items: center; gap: 8px;"
+                    title="Complete payment to confirm booking">
+                <i class="fas fa-credit-card"></i> Pay Now
+            </button>
+        ` : '';
+
+        const cancelText = type === 'confirmed' ? 'Cancel Booking' : 'Remove Item';
+        const cancelIcon = type === 'confirmed' ? 'fa-times-circle' : 'fa-trash-alt';
+
+        const createdDate = booking.createdAt ? new Date(booking.createdAt).toLocaleDateString('en-US', {
+            year: 'numeric', month: 'short', day: 'numeric'
+        }) : 'Unknown';
+
+        return `
+            <div class="booking-item ${type}">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
+                    <div style="flex: 1; min-width: 250px;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                            <i class="${statusIcon}" style="color: ${statusColor}; font-size: 18px;"></i>
+                            <h4 style="margin: 0; color: #333; font-size: 18px;">${booking.itemName}</h4>
+                            <span style="background: ${statusColor}; color: white; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">
+                                ${type === 'confirmed' ? 'Confirmed' : 'Pending Payment'}
+                            </span>
+                        </div>
+                        <div style="font-size: 12px; color: #666; margin-bottom: 5px;">Created: ${createdDate}</div>
+                        ${booking.cartId ? `<div style="font-size: 12px; color: #666;">Cart ID: ${booking.cartId}</div>` : ''}
+                        ${booking.id ? `<div style="font-size: 12px; color: #666;">Booking ID: ${booking.id}</div>` : ''}
+                    </div>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+                        ${paymentButton}
+                        <button onclick="cancelBookingFromLog('${booking.cartId || booking.id}', '${type}')"
+                                style="background: #f44336; color: white; border: none; border-radius: 6px; padding: 10px 20px; cursor: pointer; font-size: 14px; display: flex; align-items: center; gap: 8px;"
+                                title="${cancelText}">
+                            <i class="fas ${cancelIcon}"></i> ${cancelText}
+                        </button>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px; font-size: 14px;">
+                    <div><strong>Type:</strong> ${booking.bookingType?.charAt(0).toUpperCase() + booking.bookingType?.slice(1) || 'N/A'}</div>
+                    <div><strong>Guests:</strong> ${booking.guests || 1}</div>
+                    <div><strong>Check-in:</strong> ${booking.checkIn || 'N/A'}</div>
+                    <div><strong>Check-out:</strong> ${booking.checkOut || 'N/A'}</div>
+                </div>
+
+                <div style="text-align: right; padding: 15px; background: #e3f2fd; border-radius: 8px; margin-top: 15px;">
+                    <div style="font-size: 14px; color: #1976d2; margin-bottom: 5px;">Total Amount</div>
+                    <div style="font-size: 24px; font-weight: bold; color: #1565c0;">
+                        $${(booking.totalPrice || 0).toFixed(2)}
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // ================== BOOKING CANCELLATION ==================
+    async function cancelBookingFromLog(bookingId, type) {
+        const action = type === 'confirmed' ? 'cancel' : 'remove';
+        if (!confirm(`Are you sure you want to ${action} this ${type === 'confirmed' ? 'booking' : 'cart item'}?`)) {
+            return;
+        }
+
+        try {
+            showLoading(true);
+
+            if (type === 'cart') {
+                // Remove from localStorage cart
+                const cart = getCart();
+                const updatedCart = cart.filter(booking =>
+                    booking.cartId !== bookingId &&
+                    booking.email === currentUser.email
+                );
+                saveCart(updatedCart);
+                showNotification('Item removed from cart successfully!', 'success');
+            } else {
+                // Cancel confirmed booking via API
+                await apiRequest(`/bookings/${bookingId}`, {
+                    method: 'DELETE',
+                    body: JSON.stringify({ userEmail: currentUser.email })
+                });
+
+                showNotification('Booking cancelled successfully! Cancellation email sent.', 'success');
+            }
+
+            loadTripLog();
+        } catch (error) {
+            handleError(error, `${action} booking`);
+        } finally {
+            showLoading(false);
+        }
+    }
+
+    // ================== CONTACT FORM ==================
+    async function handleContactSubmission(event) {
+        event.preventDefault();
+
+        if (!currentUser) {
+            showNotification('Please log in to send messages', 'error');
+            return;
+        }
+
+        const formData = {
+            name: document.getElementById('contactName').value.trim() || currentUser.username || currentUser.name,
+            email: currentUser.email,
+            subject: document.getElementById('contactSubject').value.trim(),
+            message: document.getElementById('contactMessage').value.trim(),
+            userId: currentUser.id
+        };
+
+        if (!formData.subject || !formData.message) {
+            showNotification('Please fill in subject and message fields', 'error');
+            return;
+        }
+
+        try {
+            showLoading(true);
+            await apiRequest('/contact', {
+                method: 'POST',
+                body: JSON.stringify(formData)
+            });
+
+            showNotification('Thank you! Your message has been sent. We\'ll respond within 24 hours.', 'success');
+            document.getElementById('contactForm').reset();
+            document.getElementById('contactName').value = currentUser.username || currentUser.name;
+            document.getElementById('contactEmail').value = currentUser.email;
+
+        } catch (error) {
+            handleError(error, 'Sending contact message');
+        } finally {
+            showLoading(false);
+        }
+    }
+
+    // ================== AI CHAT FUNCTIONALITY ==================
+    function toggleChat() {
+        const chatWindow = document.getElementById('chatWindow');
+        if (chatWindow) {
+            const isVisible = chatWindow.style.display === 'block';
+            chatWindow.style.display = isVisible ? 'none' : 'block';
+        }
+    }
+
+    function sendMessage() {
+        const input = document.getElementById('chatInput');
+        const messagesContainer = document.getElementById('chatMessages');
+
+        if (!input || !messagesContainer) return;
+
+        const message = input.value.trim();
+        if (!message) return;
+
+        // Add user message
+        const userMessage = document.createElement('div');
+        userMessage.className = 'message user-message';
+        userMessage.innerHTML = `<p>${message}</p>`;
+        messagesContainer.appendChild(userMessage);
+        input.value = '';
+
+        // Scroll to bottom
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+        // Add AI response
+        setTimeout(() => {
+            const aiMessage = document.createElement('div');
+            aiMessage.className = 'message ai-message';
+            const response = getAIResponse(message);
+            aiMessage.innerHTML = `<p>${response}</p>`;
+            messagesContainer.appendChild(aiMessage);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }, 800);
+    }
+
+    function handleChatKeyPress(event) {
+        if (event.key === 'Enter') sendMessage();
+    }
+
+    function getAIResponse(userMessage) {
+        const message = userMessage.toLowerCase();
+
+        if (message.includes('hotel') || message.includes('stay')) {
+            return "Great choice! Our hotels range from luxury beach resorts to cozy mountain lodges. What type of accommodation are you looking for?";
+        } else if (message.includes('tour') || message.includes('activity')) {
+            return "We have amazing tours! From cultural heritage sites to wildlife adventures. What's your travel style - culture, nature, or adventure?";
+        } else if (message.includes('transport') || message.includes('travel')) {
+            return "Getting around is easy with us! We offer luxury transfers, scenic trains, and domestic flights. Where are you traveling from?";
+        } else if (message.includes('payment') || message.includes('book')) {
+            return "Booking is simple and secure! Just select your dates, add to cart, then complete payment. Need help with any step?";
+        } else if (message.includes('sri lanka')) {
+            return "Sri Lanka is paradise! Don't miss Sigiriya, the tea country, and southern beaches. When are you planning to visit?";
+        } else if (message.includes('email') || message.includes('confirmation')) {
+            return "All confirmed bookings receive email confirmations automatically! Check your inbox and spam folder. Need help with a specific booking?";
+        } else if (message.includes('cancel') || message.includes('refund')) {
+            return "You can cancel bookings from your Trip Log. Confirmed bookings will send cancellation emails automatically. Refunds are processed within 5-7 business days.";
+        } else {
+            const responses = [
+                "That's interesting! Tell me more about your travel plans.",
+                "Sounds like an amazing trip! What destination are you most excited about?",
+                "I can help with hotels, tours, or transportation. What would you like to explore?",
+                "Perfect! Let me know your travel dates and preferences.",
+                "Great question! What specific travel information are you looking for?",
+                "I'd love to help plan your perfect trip. What's your dream destination?",
+                "Absolutely! What type of experience are you hoping for - relaxation, adventure, or culture?"
+            ];
+            return responses[Math.floor(Math.random() * responses.length)];
+        }
+    }
+
+    // ================== EVENT LISTENERS SETUP ==================
+    function setupEventListeners() {
+        // Contact form
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', handleContactSubmission);
+        }
+
+        // Modal close handlers
+        document.addEventListener('click', function(event) {
+            // Close booking modal
+            if (event.target.id === 'bookingModal') {
+                closeBookingModal();
+            }
+            // Close payment modal
+            if (event.target.id === 'paymentModal') {
+                closePaymentModal();
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeBookingModal();
+                closePaymentModal();
+            }
+        });
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') performSearch();
+            });
+        }
+    }
+
+    // ================== INITIALIZATION ==================
+    window.addEventListener('DOMContentLoaded', async function() {
+        try {
+            console.log('=== TRAVELER DASHBOARD INITIALIZATION ===');
+
+            const userInitialized = await initializeUser();
+            if (!userInitialized) return;
+
+            // Setup UI
+            setupEventListeners();
+            await loadData('hotels');
+            showSection('home');
+
+            // Pre-fill contact form
+            if (currentUser) {
+                const contactName = document.getElementById('contactName');
+                const contactEmail = document.getElementById('contactEmail');
+                if (contactName) contactName.value = currentUser.username || currentUser.name;
+                if (contactEmail) contactEmail.value = currentUser.email;
+            }
+
+            console.log('=== INITIALIZATION COMPLETE ===');
+            showNotification('Welcome to Traveler! Ready to plan your next adventure?', 'success');
+
+        } catch (error) {
+            console.error('Initialization failed:', error);
+            showNotification('Failed to load dashboard. Please refresh the page.', 'error');
+        }
+    });
+
+    // ================== GLOBAL FUNCTIONS ==================
+    // Make functions globally accessible for onclick handlers
+    window.showSection = showSection;
+    window.showTab = showTab;
+    window.openBookingModal = openBookingModal;
+    window.closeBookingModal = closeBookingModal;
+    window.handleAddToCart = handleAddToCart;
+    window.handleLogout = handleLogout;
+    window.performSearch = performSearch;
+    window.loadTripLog = loadTripLog;
+    window.openPaymentModal = openPaymentModal;
+    window.closePaymentModal = closePaymentModal;
+    window.cancelBookingFromLog = cancelBookingFromLog;
+    window.toggleChat = toggleChat;
+    window.sendMessage = sendMessage;
+    window.handleChatKeyPress = handleChatKeyPress;
+    window.apiRequest = apiRequest;
+    window.refreshAuthToken = refreshAuthToken;
+
+</script>
+</body>
+</html>

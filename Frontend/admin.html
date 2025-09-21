@@ -1,0 +1,1726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traveler Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f8fafc;
+            min-height: 100vh;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        /* Header Styles */
+        .navbar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            padding: 12px 24px;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            margin: 0 4px;
+            cursor: pointer;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .nav-item.active {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Card Styles */
+        .dashboard-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-gradient {
+            height: 100px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .card-gradient.hotels { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card-gradient.tours { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .card-gradient.transports { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .card-gradient.bookings { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+        .card-gradient.users { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+
+        .form-input {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            color: #4a5568;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 8px;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+
+        .btn-danger {
+            background: #f56565;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-danger:hover {
+            background: #e53e3e;
+        }
+
+        /* Table Styles */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .data-table th {
+            background: #f7fafc;
+            color: #4a5568;
+            padding: 16px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .data-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #f7fafc;
+        }
+
+        .data-table tr:hover {
+            background-color: #f7fafc;
+        }
+
+        /* Chart Container */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Page Content */
+        .page-content {
+            display: none;
+        }
+
+        .page-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Status badges */
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-pending { background: #fef3cd; color: #8a6914; }
+        .status-confirmed { background: #d1e7dd; color: #0f5132; }
+        .status-cancelled { background: #f8d7da; color: #842029; }
+        .status-cart { background: #e2e3ff; color: #3730a3; }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: -10px;
+        }
+
+        .close:hover {
+            color: #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .nav-items {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+        }
+
+        /* New styles for image upload */
+        .image-upload-container {
+            margin-bottom: 1rem;
+        }
+
+        .image-preview {
+            width: 100%;
+            max-height: 200px;
+            border-radius: 8px;
+            margin-top: 10px;
+            display: none;
+            object-fit: cover;
+        }
+
+        .upload-btn {
+            background: #e2e8f0;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 16px;
+            color: #4a5568;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 8px;
+            display: inline-block;
+        }
+
+        .upload-btn:hover {
+            background: #cbd5e0;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .upload-status {
+            font-size: 12px;
+            margin-top: 5px;
+            color: #4a5568;
+        }
+    </style>
+</head>
+<body>
+<!-- Navigation Header -->
+<nav class="navbar">
+    <div class="container mx-auto px-4 py-3">
+        <div class="nav-container flex items-center justify-between">
+            <div class="text-white text-xl font-bold">Travel Admin</div>
+            <div class="nav-items flex items-center">
+                <div class="nav-item active" data-page="home">Home</div>
+                <div class="nav-item" data-page="hotels">Hotels</div>
+                <div class="nav-item" data-page="tours">Tours</div>
+                <div class="nav-item" data-page="transports">Transports</div>
+                <div class="nav-item" data-page="bookings">Bookings</div>
+                <div class="nav-item" data-page="users">Users</div>
+                <div class="nav-item logout-btn" id="logoutBtn" onclick="handleLogout()">Logout</div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container mx-auto px-4 py-8">
+    <!-- Home Page -->
+    <div id="home" class="page-content active">
+        <h1 class="text-3xl font-bold text-gray-800 mb-8">Dashboard Overview</h1>
+
+        <div class="dashboard-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <!-- Hotels Card -->
+            <div class="dashboard-card">
+                <div class="card-gradient hotels">
+                    <span>🏨</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Hotels</h3>
+                    <p class="text-3xl font-bold text-gray-900" id="hotelCount">0</p>
+                    <p class="text-sm text-gray-500">Total registered hotels</p>
+                </div>
+            </div>
+
+            <!-- Tours Card -->
+            <div class="dashboard-card">
+                <div class="card-gradient tours">
+                    <span>🌍</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Tours</h3>
+                    <p class="text-3xl font-bold text-gray-900" id="tourCount">0</p>
+                    <p class="text-sm text-gray-500">Available tour packages</p>
+                </div>
+            </div>
+
+            <!-- Transports Card -->
+            <div class="dashboard-card">
+                <div class="card-gradient transports">
+                    <span>🚗</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Transports</h3>
+                    <p class="text-3xl font-bold text-gray-900" id="transportCount">0</p>
+                    <p class="text-sm text-gray-500">Transport options</p>
+                </div>
+            </div>
+
+            <!-- Bookings Card -->
+            <div class="dashboard-card">
+                <div class="card-gradient bookings">
+                    <span>📝</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Bookings</h3>
+                    <p class="text-3xl font-bold text-gray-900" id="bookingCount">0</p>
+                    <p class="text-sm text-gray-500">Total bookings</p>
+                </div>
+            </div>
+
+            <!-- Users Card -->
+            <div class="dashboard-card">
+                <div class="card-gradient users">
+                    <span>👥</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Users</h3>
+                    <p class="text-3xl font-bold text-gray-900" id="userCount">0</p>
+                    <p class="text-sm text-gray-500">Registered users</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="dashboard-card p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">Services Distribution</h3>
+                <div class="chart-container">
+                    <canvas id="servicesChart"></canvas>
+                </div>
+            </div>
+
+            <div class="dashboard-card p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">Booking Status</h3>
+                <div class="chart-container">
+                    <canvas id="bookingChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hotels Page -->
+    <div id="hotels" class="page-content">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">Hotels Management</h1>
+            <button class="btn-primary" onclick="openModal('hotelModal')">Add New Hotel</button>
+        </div>
+
+        <div class="dashboard-card p-6">
+            <div class="mb-4">
+                <input type="text" id="hotelSearch" placeholder="Search hotels..." class="form-input w-full max-w-md">
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="data-table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Location</th>
+                        <th>Price/Night</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody id="hotelTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tours Page -->
+    <div id="tours" class="page-content">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">Tours Management</h1>
+            <button class="btn-primary" onclick="openModal('tourModal')">Add New Tour</button>
+        </div>
+
+        <div class="dashboard-card p-6">
+            <div class="mb-4">
+                <input type="text" id="tourSearch" placeholder="Search tours..." class="form-input w-full max-w-md">
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="data-table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Destination</th>
+                        <th>Price</th>
+                        <th>Duration</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tourTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transports Page -->
+    <div id="transports" class="page-content">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">Transport Management</h1>
+            <button class="btn-primary" onclick="openModal('transportModal')">Add New Transport</button>
+        </div>
+
+        <div class="dashboard-card p-6">
+            <div class="mb-4">
+                <input type="text" id="transportSearch" placeholder="Search transports..." class="form-input w-full max-w-md">
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="data-table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Type</th>
+                        <th>Provider</th>
+                        <th>Price</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody id="transportTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bookings Page -->
+    <div id="bookings" class="page-content">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">Bookings Management</h1>
+            <button class="btn-primary" onclick="openModal('bookingModal')">Add New Booking</button>
+        </div>
+
+        <div class="dashboard-card p-6">
+            <div class="mb-4">
+                <input type="text" id="bookingSearch" placeholder="Search bookings..." class="form-input w-full max-w-md">
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="data-table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Customer</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th>Total</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody id="bookingTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Users Page -->
+    <div id="users" class="page-content">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">Users Management</h1>
+            <button class="btn-primary" onclick="openModal('userModal')">Add New User</button>
+        </div>
+
+        <div class="dashboard-card p-6">
+            <div class="mb-4">
+                <input type="text" id="userSearch" placeholder="Search users..." class="form-input w-full max-w-md">
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="data-table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody id="userTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Hotel Modal -->
+<div id="hotelModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('hotelModal')">&times;</span>
+        <h2 class="text-2xl font-bold mb-6">Add/Edit Hotel</h2>
+        <form id="hotelForm">
+            <input type="hidden" id="hotelId" name="id">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Hotel Name</label>
+                    <input type="text" id="hotelName" name="name" class="form-input w-full" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                    <input type="text" id="hotelLocation" name="location" class="form-input w-full" required>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Price Per Night</label>
+                    <input type="number" id="hotelPrice" name="pricePerNight" step="0.01" class="form-input w-full" required>
+                </div>
+
+                <div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Image URL</label>
+                        <input type="text" id="hotelImage" name="imageUrl" class="form-input w-full" required>
+                        <button type="button" class="upload-btn" onclick="document.getElementById('hotelImageUpload').click()">Choose Image</button>
+                        <input type="file" id="hotelImageUpload" class="file-input" accept="image/*" onchange="handleImageUpload(this, 'hotelImage', 'hotelPreview')">
+                        <div class="upload-status" id="hotelUploadStatus">No image selected</div>
+                    </div>
+                    <img id="hotelPreview" class="image-preview" alt="Hotel preview">
+                </div>
+
+            </div>
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                <textarea id="hotelDescription" name="description" rows="4" class="form-input w-full" required></textarea>
+            </div>
+            <div class="flex justify-end gap-4">
+                <button type="button" class="btn-secondary" onclick="closeModal('hotelModal')">Cancel</button>
+                <button type="submit" class="btn-primary">Save Hotel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Tour Modal -->
+<div id="tourModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('tourModal')">&times;</span>
+        <h2 class="text-2xl font-bold mb-6">Add/Edit Tour</h2>
+        <form id="tourForm">
+            <input type="hidden" id="tourId" name="id">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Destination</label>
+                    <input type="text" id="tourDestination" name="destination" class="form-input w-full" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Price</label>
+                    <input type="number" id="tourPrice" name="price" step="0.01" class="form-input w-full" required>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Duration (Days)</label>
+                    <input type="number" id="tourDuration" name="durationDays" class="form-input w-full" required>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Image</label>
+                    <div class="image-upload-container">
+                        <input type="text" id="tourImage" name="imageUrl" class="form-input w-full mb-2" required readonly>
+                        <button type="button" class="upload-btn" onclick="document.getElementById('tourImageUpload').click()">Choose Image</button>
+                        <input type="file" id="tourImageUpload" class="file-input" accept="image/*" onchange="handleImageUpload(this, 'tourImage', 'tourPreview')">
+                        <div class="upload-status" id="tourUploadStatus">No image selected</div>
+                    </div>
+                    <img id="tourPreview" class="image-preview" alt="Tour preview">
+                </div>
+
+            </div>
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                <textarea id="tourDescription" name="description" rows="4" class="form-input w-full" required></textarea>
+            </div>
+            <div class="flex justify-end gap-4">
+                <button type="button" class="btn-secondary" onclick="closeModal('tourModal')">Cancel</button>
+                <button type="submit" class="btn-primary">Save Tour</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Transport Modal -->
+<div id="transportModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('transportModal')">&times;</span>
+        <h2 class="text-2xl font-bold mb-6">Add/Edit Transport</h2>
+        <form id="transportForm">
+            <input type="hidden" id="transportId" name="id">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Type</label>
+                    <select id="transportType" name="type" class="form-input w-full" required>
+                        <option value="">Select type</option>
+                        <option value="Car">Car</option>
+                        <option value="Bus">Bus</option>
+                        <option value="Flight">Flight</option>
+                        <option value="Train">Train</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Provider</label>
+                    <input type="text" id="transportProvider" name="provider" class="form-input w-full" required>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Price</label>
+                    <input type="number" id="transportPrice" name="price" step="0.01" class="form-input w-full" required>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Image</label>
+                    <div class="image-upload-container">
+                        <input type="text" id="transportImage" name="imageUrl" class="form-input w-full mb-2" required readonly>
+                        <button type="button" class="upload-btn" onclick="document.getElementById('transportImageUpload').click()">Choose Image</button>
+                        <input type="file" id="transportImageUpload" class="file-input" accept="image/*" onchange="handleImageUpload(this, 'transportImage', 'transportPreview')">
+                        <div class="upload-status" id="transportUploadStatus">No image selected</div>
+                    </div>
+                    <img id="transportPreview" class="image-preview" alt="Transport preview">
+                </div>
+
+            </div>
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                <textarea id="transportDescription" name="description" rows="4" class="form-input w-full" required></textarea>
+            </div>
+            <div class="flex justify-end gap-4">
+                <button type="button" class="btn-secondary" onclick="closeModal('transportModal')">Cancel</button>
+                <button type="submit" class="btn-primary">Save Transport</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Booking Modal -->
+<div id="bookingModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('bookingModal')">&times;</span>
+        <h2 class="text-2xl font-bold mb-6">Add/Edit Booking</h2>
+        <form id="bookingForm">
+            <input type="hidden" id="bookingId" name="id">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                    <input type="text" id="bookingFullName" name="fullName" class="form-input w-full" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                    <input type="email" id="bookingEmail" name="email" class="form-input w-full" required>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Booking Type</label>
+                    <select id="bookingType" name="bookingType" class="form-input w-full" required>
+                        <option value="">Select type</option>
+                        <option value="HOTEL">Hotel</option>
+                        <option value="TOUR">Tour</option>
+                        <option value="TRANSPORT">Transport</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                    <select id="bookingStatus" name="status" class="form-input w-full" required>
+                        <option value="CART">Cart</option>
+                        <option value="PENDING">Pending</option>
+                        <option value="CONFIRMED">Confirmed</option>
+                        <option value="CANCELLED">Cancelled</option>
+                    </select>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Total Price</label>
+                    <input type="number" id="bookingTotalPrice" name="totalPrice" step="0.01" class="form-input w-full" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Guests</label>
+                    <input type="number" id="bookingGuests" name="guests" class="form-input w-full" required>
+                </div>
+            </div>
+            <div class="flex justify-end gap-4">
+                <button type="button" class="btn-secondary" onclick="closeModal('bookingModal')">Cancel</button>
+                <button type="submit" class="btn-primary">Save Booking</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- User Modal -->
+<div id="userModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('userModal')">&times;</span>
+        <h2 class="text-2xl font-bold mb-6">Add/Edit User</h2>
+        <form id="userForm">
+            <input type="hidden" id="userId" name="id">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                    <input type="text" id="userName" name="name" class="form-input w-full" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                    <input type="email" id="userEmail" name="email" class="form-input w-full" required>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Role</label>
+                    <select id="userRole" name="role" class="form-input w-full" required>
+                        <option value="">Select role</option>
+                        <option value="ADMIN">Admin</option>
+                        <option value="USER">User</option>
+                        <option value="MANAGER">Manager</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Phone</label>
+                    <input type="tel" id="userPhone" name="phone" class="form-input w-full">
+                </div>
+            </div>
+            <div class="flex justify-end gap-4">
+                <button type="button" class="btn-secondary" onclick="closeModal('userModal')">Cancel</button>
+                <button type="submit" class="btn-primary">Save User</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    const API_BASE_URL = 'http://localhost:8080/api';
+
+    // Data storage
+    let data = {
+        hotels: [],
+        tours: [],
+        transports: [],
+        bookings: [],
+        users: []
+    };
+
+    let charts = {
+        services: null,
+        bookings: null
+    };
+
+    const jwtAuth = {
+        // Check if user is authenticated
+        isAuthenticated: async () => {
+            try {
+                const response = await fetch(`${API_BASE_URL}/auth/me`, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    const userData = await response.json();
+                    return { authenticated: true, user: userData };
+                }
+                return { authenticated: false, user: null };
+            } catch (error) {
+                console.error('Auth check error:', error);
+                return { authenticated: false, user: null };
+            }
+        },
+
+        // Logout function
+        logout: async () => {
+            try {
+                const response = await fetch(`${API_BASE_URL}/auth/logout`, {
+                    method: 'POST',
+                    credentials: 'include'
+                });
+
+                if (response.ok) {
+                    return { success: true, message: 'Logged out successfully' };
+                }
+                return { success: false, error: 'Logout failed' };
+            } catch (error) {
+                console.error('Logout error:', error);
+                return { success: true, message: 'Logged out successfully' };
+            }
+        },
+
+        // Check if user has admin role
+        isAdmin: (user) => {
+            return user && user.role === 'ADMIN';
+        },
+
+        // Redirect to login if not authenticated
+        requireAuth: async () => {
+            const authResult = await jwtAuth.isAuthenticated();
+            if (!authResult.authenticated) {
+                window.location.href = 'index.html';
+                return false;
+            }
+            if (!jwtAuth.isAdmin(authResult.user)) {
+                alert('Access denied. Admin privileges required.');
+                window.location.href = 'user.html';
+                return false;
+            }
+            return true;
+        }
+    };
+
+    // Navigation functionality
+    function initNavigation() {
+        const navItems = document.querySelectorAll('.nav-item[data-page]');
+        const pages = document.querySelectorAll('.page-content');
+
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const targetPage = item.getAttribute('data-page');
+
+                // Update active nav item
+                navItems.forEach(nav => nav.classList.remove('active'));
+                item.classList.add('active');
+
+                // Show target page
+                pages.forEach(page => {
+                    page.classList.remove('active');
+                    if (page.id === targetPage) {
+                        page.classList.add('active');
+                    }
+                });
+
+                // Load data for the specific page
+                if (targetPage !== 'home') {
+                    loadPageData(targetPage);
+                }
+            });
+        });
+
+        // Logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            if (confirm('Are you sure you want to logout?')) {
+                await handleLogout();
+            }
+        });
+    }
+
+    // Modal functionality
+    function openModal(modalId) {
+        document.getElementById(modalId).style.display = 'block';
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = 'none';
+        // Reset form
+        const form = document.querySelector(`#${modalId} form`);
+        if (form) form.reset();
+
+        // Hide image previews
+        const previews = document.querySelectorAll(`#${modalId} .image-preview`);
+        previews.forEach(preview => {
+            preview.style.display = 'none';
+        });
+
+        // Reset status messages
+        const statusElements = document.querySelectorAll(`#${modalId} .upload-status`);
+        statusElements.forEach(element => {
+            element.textContent = 'No image selected';
+            element.style.color = '#4a5568';
+        });
+    }
+
+    // API functions
+    async function fetchData(endpoint) {
+        try {
+            const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (response.ok) {
+                return await response.json();
+            } else if (response.status === 401) {
+                // Unauthorized - redirect to login
+                window.location.href = 'index.html';
+                return [];
+            } else {
+                console.error(`Failed to fetch ${endpoint}:`, response.statusText);
+                return [];
+            }
+        } catch (error) {
+            console.error(`Error fetching ${endpoint}:`, error);
+            return [];
+        }
+    }
+
+    async function saveData(endpoint, formData, isUpdate = false) {
+        try {
+            const method = isUpdate ? 'PUT' : 'POST';
+            const url = isUpdate ? `${API_BASE_URL}/${endpoint}/${formData.id}` : `${API_BASE_URL}/${endpoint}`;
+
+            const response = await fetch(url, {
+                method: method,
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            if (response.ok) {
+                return await response.json();
+            } else if (response.status === 401) {
+                // Unauthorized - redirect to login
+                window.location.href = 'index.html';
+                throw new Error('Authentication required');
+            } else {
+                throw new Error('Failed to save data');
+            }
+        } catch (error) {
+            console.error('Error saving data:', error);
+            throw error;
+        }
+    }
+
+    async function deleteData(endpoint, id) {
+        try {
+            const response = await fetch(`${API_BASE_URL}/${endpoint}/${id}`, {
+                method: 'DELETE',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                return true;
+            } else if (response.status === 401) {
+                // Unauthorized - redirect to login
+                window.location.href = 'index.html';
+                throw new Error('Authentication required');
+            } else {
+                throw new Error('Failed to delete data');
+            }
+        } catch (error) {
+            console.error('Error deleting data:', error);
+            throw error;
+        }
+    }
+
+    // Load initial dashboard data
+    async function loadDashboardData() {
+        try {
+            const [hotels, tours, transports, bookings, users] = await Promise.all([
+                fetchData('hotels'),
+                fetchData('tours'),
+                fetchData('transports'),
+                fetchData('bookings'),
+                fetchData('users').catch(() => []) // Users endpoint might not exist
+            ]);
+
+            data.hotels = hotels;
+            data.tours = tours;
+            data.transports = transports;
+            data.bookings = bookings;
+            data.users = users;
+
+            updateDashboardCards();
+            updateCharts();
+        } catch (error) {
+            console.error('Error loading dashboard data:', error);
+        }
+    }
+
+    // Update dashboard cards
+    function updateDashboardCards() {
+        document.getElementById('hotelCount').textContent = data.hotels.length;
+        document.getElementById('tourCount').textContent = data.tours.length;
+        document.getElementById('transportCount').textContent = data.transports.length;
+        document.getElementById('bookingCount').textContent = data.bookings.length;
+        document.getElementById('userCount').textContent = data.users.length;
+    }
+
+    // Update charts
+    function updateCharts() {
+        updateServicesChart();
+        updateBookingChart();
+    }
+
+    function updateServicesChart() {
+        const ctx = document.getElementById('servicesChart').getContext('2d');
+
+        if (charts.services) {
+            charts.services.destroy();
+        }
+
+        charts.services = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Hotels', 'Tours', 'Transports'],
+                datasets: [{
+                    data: [data.hotels.length, data.tours.length, data.transports.length],
+                    backgroundColor: [
+                        '#667eea',
+                        '#f093fb',
+                        '#4facfe'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+    }
+
+    function updateBookingChart() {
+        const ctx = document.getElementById('bookingChart').getContext('2d');
+
+        if (charts.bookings) {
+            charts.bookings.destroy();
+        }
+
+        // Count booking statuses
+        const statusCounts = {
+            'CART': 0,
+            'PENDING': 0,
+            'CONFIRMED': 0,
+            'CANCELLED': 0
+        };
+
+        data.bookings.forEach(booking => {
+            if (statusCounts.hasOwnProperty(booking.status)) {
+                statusCounts[booking.status]++;
+            }
+        });
+
+        charts.bookings = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Cart', 'Pending', 'Confirmed', 'Cancelled'],
+                datasets: [{
+                    data: [
+                        statusCounts.CART,
+                        statusCounts.PENDING,
+                        statusCounts.CONFIRMED,
+                        statusCounts.CANCELLED
+                    ],
+                    backgroundColor: [
+                        '#e2e3ff',
+                        '#fef3cd',
+                        '#d1e7dd',
+                        '#f8d7da'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+    }
+
+    // Load data for specific page
+    async function loadPageData(page) {
+        switch(page) {
+            case 'hotels':
+                if (data.hotels.length === 0) {
+                    data.hotels = await fetchData('hotels');
+                }
+                renderHotelsTable();
+                break;
+            case 'tours':
+                if (data.tours.length === 0) {
+                    data.tours = await fetchData('tours');
+                }
+                renderToursTable();
+                break;
+            case 'transports':
+                if (data.transports.length === 0) {
+                    data.transports = await fetchData('transports');
+                }
+                renderTransportsTable();
+                break;
+            case 'bookings':
+                if (data.bookings.length === 0) {
+                    data.bookings = await fetchData('bookings');
+                }
+                renderBookingsTable();
+                break;
+            case 'users':
+                if (data.users.length === 0) {
+                    data.users = await fetchData('users').catch(() => []);
+                }
+                renderUsersTable();
+                break;
+        }
+    }
+
+    // Render tables
+    function renderHotelsTable() {
+        const tbody = document.getElementById('hotelTableBody');
+        tbody.innerHTML = '';
+
+        data.hotels.forEach(hotel => {
+            const row = `
+                    <tr>
+                        <td>${hotel.id || ''}</td>
+                        <td>${hotel.name || ''}</td>
+                        <td>${hotel.location || ''}</td>
+                        <td>${hotel.pricePerNight || 0}</td>
+                        <td>
+                            <button class="btn-secondary" onclick="editHotel(${hotel.id})">Edit</button>
+                            <button class="btn-danger" onclick="deleteHotel(${hotel.id})">Delete</button>
+                        </td>
+                    </tr>
+                `;
+            tbody.innerHTML += row;
+        });
+    }
+
+    function renderToursTable() {
+        const tbody = document.getElementById('tourTableBody');
+        tbody.innerHTML = '';
+
+        data.tours.forEach(tour => {
+            const row = `
+                    <tr>
+                        <td>${tour.id || ''}</td>
+                        <td>${tour.destination || ''}</td>
+                        <td>${tour.price || 0}</td>
+                        <td>${tour.durationDays || 0} days</td>
+                        <td>
+                            <button class="btn-secondary" onclick="editTour(${tour.id})">Edit</button>
+                            <button class="btn-danger" onclick="deleteTour(${tour.id})">Delete</button>
+                        </td>
+                    </tr>
+                `;
+            tbody.innerHTML += row;
+        });
+    }
+
+    function renderTransportsTable() {
+        const tbody = document.getElementById('transportTableBody');
+        tbody.innerHTML = '';
+
+        data.transports.forEach(transport => {
+            const row = `
+                    <tr>
+                        <td>${transport.id || ''}</td>
+                        <td>${transport.type || ''}</td>
+                        <td>${transport.provider || ''}</td>
+                        <td>${transport.price || 0}</td>
+                        <td>
+                            <button class="btn-secondary" onclick="editTransport(${transport.id})">Edit</button>
+                            <button class="btn-danger" onclick="deleteTransport(${transport.id})">Delete</button>
+                        </td>
+                    </tr>
+                `;
+            tbody.innerHTML += row;
+        });
+    }
+
+    function renderBookingsTable() {
+        const tbody = document.getElementById('bookingTableBody');
+        tbody.innerHTML = '';
+
+        data.bookings.forEach(booking => {
+            let statusClass = '';
+            if (booking.status === 'PENDING') statusClass = 'status-pending';
+            else if (booking.status === 'CONFIRMED') statusClass = 'status-confirmed';
+            else if (booking.status === 'CANCELLED') statusClass = 'status-cancelled';
+            else if (booking.status === 'CART') statusClass = 'status-cart';
+
+            const row = `
+                    <tr>
+                        <td>${booking.id || ''}</td>
+                        <td>${booking.fullName || ''}</td>
+                        <td>${booking.bookingType || ''}</td>
+                        <td><span class="status-badge ${statusClass}">${booking.status || ''}</span></td>
+                        <td>${booking.totalPrice || 0}</td>
+                        <td>
+                            <button class="btn-secondary" onclick="editBooking(${booking.id})">Edit</button>
+                            <button class="btn-danger" onclick="deleteBooking(${booking.id})">Delete</button>
+                        </td>
+                    </tr>
+                `;
+            tbody.innerHTML += row;
+        });
+    }
+
+    function renderUsersTable() {
+        const tbody = document.getElementById('userTableBody');
+        tbody.innerHTML = '';
+
+        data.users.forEach(user => {
+            const row = `
+                    <tr>
+                        <td>${user.id || ''}</td>
+                        <td>${user.username || ''}</td>
+                        <td>${user.email || ''}</td>
+                        <td>${user.role || 'USER'}</td>
+                        <td>
+                            <button class="btn-secondary" onclick="editUser(${user.id})">Edit</button>
+                            <button class="btn-danger" onclick="deleteUser(${user.id})">Delete</button>
+                        </td>
+                    </tr>
+                `;
+            tbody.innerHTML += row;
+        });
+    }
+
+    // Add these new functions for image handling
+    function handleImageUpload(inputElement, imageUrlFieldId, previewImageId) {
+        const file = inputElement.files[0];
+        const statusElement = document.getElementById(inputElement.id.replace('Upload', 'UploadStatus'));
+        const previewElement = document.getElementById(previewImageId);
+        const imageUrlField = document.getElementById(imageUrlFieldId);
+
+        if (file) {
+            // Check if the file is an image
+            if (!file.type.match('image.*')) {
+                statusElement.textContent = 'Please select an image file';
+                statusElement.style.color = '#e53e3e';
+                return;
+            }
+
+            // Show preview
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                previewElement.src = e.target.result;
+                previewElement.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+
+            // Generate a simulated path (as you requested)
+            const fileName = file.name.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_.]/g, '');
+            const imagePath = `images/${fileName}`;
+
+            // Set the value in the image URL field
+            imageUrlField.value = imagePath;
+
+            // Update status
+            statusElement.textContent = `Image ready: ${fileName}`;
+            statusElement.style.color = '#38a169';
+        } else {
+            previewElement.style.display = 'none';
+            statusElement.textContent = 'No image selected';
+            statusElement.style.color = '#4a5568';
+        }
+    }
+
+    // Edit functions
+    function editHotel(id) {
+        const hotel = data.hotels.find(h => h.id === id);
+        if (hotel) {
+            document.getElementById('hotelId').value = hotel.id;
+            document.getElementById('hotelName').value = hotel.name;
+            document.getElementById('hotelLocation').value = hotel.location;
+            document.getElementById('hotelPrice').value = hotel.pricePerNight;
+            document.getElementById('hotelImage').value = hotel.imageUrl;
+            document.getElementById('hotelDescription').value = hotel.description;
+            // Show image preview if available
+            const preview = document.getElementById('hotelPreview');
+            if (hotel.imageUrl) {
+                preview.src = hotel.imageUrl;
+                preview.style.display = 'block';
+                document.getElementById('hotelUploadStatus').textContent = 'Current image: ' + hotel.imageUrl.split('/').pop();
+                document.getElementById('hotelUploadStatus').style.color = '#38a169';
+            }
+
+            openModal('hotelModal');
+        }
+    }
+
+    function editTour(id) {
+        const tour = data.tours.find(t => t.id === id);
+        if (tour) {
+            document.getElementById('tourId').value = tour.id;
+            document.getElementById('tourDestination').value = tour.destination;
+            document.getElementById('tourPrice').value = tour.price;
+            document.getElementById('tourDuration').value = tour.durationDays;
+            document.getElementById('tourImage').value = tour.imageUrl;
+            document.getElementById('tourDescription').value = tour.description;
+            // Show image preview if available
+            const preview = document.getElementById('tourPreview');
+            if (tour.imageUrl) {
+                preview.src = tour.imageUrl;
+                preview.style.display = 'block';
+                document.getElementById('tourUploadStatus').textContent = 'Current image: ' + tour.imageUrl.split('/').pop();
+                document.getElementById('tourUploadStatus').style.color = '#38a169';
+            }
+
+            openModal('tourModal');
+        }
+    }
+
+    function editTransport(id) {
+        const transport = data.transports.find(t => t.id === id);
+        if (transport) {
+            document.getElementById('transportId').value = transport.id;
+            document.getElementById('transportType').value = transport.type;
+            document.getElementById('transportProvider').value = transport.provider;
+            document.getElementById('transportPrice').value = transport.price;
+            document.getElementById('transportImage').value = transport.imageUrl;
+            document.getElementById('transportDescription').value = transport.description;
+            // Show image preview if available
+            const preview = document.getElementById('transportPreview');
+            if (transport.imageUrl) {
+                preview.src = transport.imageUrl;
+                preview.style.display = 'block';
+                document.getElementById('transportUploadStatus').textContent = 'Current image: ' + transport.imageUrl.split('/').pop();
+                document.getElementById('transportUploadStatus').style.color = '#38a169';
+            }
+
+            openModal('transportModal');
+        }
+    }
+
+    function editBooking(id) {
+        const booking = data.bookings.find(b => b.id === id);
+        if (booking) {
+            document.getElementById('bookingId').value = booking.id;
+            document.getElementById('bookingFullName').value = booking.fullName;
+            document.getElementById('bookingEmail').value = booking.email;
+            document.getElementById('bookingType').value = booking.bookingType;
+            document.getElementById('bookingStatus').value = booking.status;
+            document.getElementById('bookingTotalPrice').value = booking.totalPrice;
+            document.getElementById('bookingGuests').value = booking.guests;
+            openModal('bookingModal');
+        }
+    }
+
+    function editUser(id) {
+        const user = data.users.find(u => u.id === id);
+        if (user) {
+            document.getElementById('userId').value = user.id;
+            document.getElementById('userName').value = user.name;
+            document.getElementById('userEmail').value = user.email;
+            document.getElementById('userRole').value = user.role;
+            document.getElementById('userPhone').value = user.phone;
+            openModal('userModal');
+        }
+    }
+
+    // Delete functions
+    async function deleteHotel(id) {
+        if (confirm('Are you sure you want to delete this hotel?')) {
+            try {
+                await deleteData('hotels', id);
+                data.hotels = data.hotels.filter(h => h.id !== id);
+                renderHotelsTable();
+                updateDashboardCards();
+                updateCharts();
+                alert('Hotel deleted successfully!');
+            } catch (error) {
+                alert('Error deleting hotel!');
+            }
+        }
+    }
+
+    async function deleteTour(id) {
+        if (confirm('Are you sure you want to delete this tour?')) {
+            try {
+                await deleteData('tours', id);
+                data.tours = data.tours.filter(t => t.id !== id);
+                renderToursTable();
+                updateDashboardCards();
+                updateCharts();
+                alert('Tour deleted successfully!');
+            } catch (error) {
+                alert('Error deleting tour!');
+            }
+        }
+    }
+
+    async function deleteTransport(id) {
+        if (confirm('Are you sure you want to delete this transport?')) {
+            try {
+                await deleteData('transports', id);
+                data.transports = data.transports.filter(t => t.id !== id);
+                renderTransportsTable();
+                updateDashboardCards();
+                updateCharts();
+                alert('Transport deleted successfully!');
+            } catch (error) {
+                alert('Error deleting transport!');
+            }
+        }
+    }
+
+    async function deleteBooking(id) {
+        if (confirm('Are you sure you want to delete this booking?')) {
+            try {
+                await deleteData('bookings', id);
+                data.bookings = data.bookings.filter(b => b.id !== id);
+                renderBookingsTable();
+                updateDashboardCards();
+                updateCharts();
+                alert('Booking deleted successfully!');
+            } catch (error) {
+                alert('Error deleting booking!');
+            }
+        }
+    }
+
+    async function deleteUser(id) {
+        if (confirm('Are you sure you want to delete this user?')) {
+            try {
+                await deleteData('users', id);
+                data.users = data.users.filter(u => u.id !== id);
+                renderUsersTable();
+                updateDashboardCards();
+                alert('User deleted successfully!');
+            } catch (error) {
+                alert('Error deleting user!');
+            }
+        }
+    }
+
+    // Form submissions
+    function initForms() {
+        // Hotel form
+        document.getElementById('hotelForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const hotel = Object.fromEntries(formData);
+
+            try {
+                const isUpdate = hotel.id && hotel.id !== '';
+                const result = await saveData('hotels', hotel, isUpdate);
+
+                if (isUpdate) {
+                    const index = data.hotels.findIndex(h => h.id == hotel.id);
+                    if (index !== -1) data.hotels[index] = result;
+                } else {
+                    data.hotels.push(result);
+                }
+
+                renderHotelsTable();
+                updateDashboardCards();
+                updateCharts();
+                closeModal('hotelModal');
+                alert('Hotel saved successfully!');
+            } catch (error) {
+                alert('Error saving hotel!');
+            }
+        });
+
+        // Tour form
+        document.getElementById('tourForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const tour = Object.fromEntries(formData);
+
+            try {
+                const isUpdate = tour.id && tour.id !== '';
+                const result = await saveData('tours', tour, isUpdate);
+
+                if (isUpdate) {
+                    const index = data.tours.findIndex(t => t.id == tour.id);
+                    if (index !== -1) data.tours[index] = result;
+                } else {
+                    data.tours.push(result);
+                }
+
+                renderToursTable();
+                updateDashboardCards();
+                updateCharts();
+                closeModal('tourModal');
+                alert('Tour saved successfully!');
+            } catch (error) {
+                alert('Error saving tour!');
+            }
+        });
+
+        // Transport form
+        document.getElementById('transportForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const transport = Object.fromEntries(formData);
+
+            try {
+                const isUpdate = transport.id && transport.id !== '';
+                const result = await saveData('transports', transport, isUpdate);
+
+                if (isUpdate) {
+                    const index = data.transports.findIndex(t => t.id == transport.id);
+                    if (index !== -1) data.transports[index] = result;
+                } else {
+                    data.transports.push(result);
+                }
+
+                renderTransportsTable();
+                updateDashboardCards();
+                updateCharts();
+                closeModal('transportModal');
+                alert('Transport saved successfully!');
+            } catch (error) {
+                alert('Error saving transport!');
+            }
+        });
+
+        // Booking form
+        document.getElementById('bookingForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const booking = Object.fromEntries(formData);
+
+            try {
+                const isUpdate = booking.id && booking.id !== '';
+                const result = await saveData('bookings', booking, isUpdate);
+
+                if (isUpdate) {
+                    const index = data.bookings.findIndex(b => b.id == booking.id);
+                    if (index !== -1) data.bookings[index] = result;
+                } else {
+                    data.bookings.push(result);
+                }
+
+                renderBookingsTable();
+                updateDashboardCards();
+                updateCharts();
+                closeModal('bookingModal');
+                alert('Booking saved successfully!');
+            } catch (error) {
+                alert('Error saving booking!');
+            }
+        });
+
+        // User form
+        document.getElementById('userForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const user = Object.fromEntries(formData);
+
+            try {
+                const isUpdate = user.id && user.id !== '';
+                const result = await saveData('users', user, isUpdate);
+
+                if (isUpdate) {
+                    const index = data.users.findIndex(u => u.id == user.id);
+                    if (index !== -1) data.users[index] = result;
+                } else {
+                    data.users.push(result);
+                }
+
+                renderUsersTable();
+                updateDashboardCards();
+                closeModal('userModal');
+                alert('User saved successfully!');
+            } catch (error) {
+                alert('Error saving user!');
+            }
+        });
+    }
+
+    // Search functionality
+    function initSearch() {
+        const searchInputs = ['hotelSearch', 'tourSearch', 'transportSearch', 'bookingSearch', 'userSearch'];
+
+        searchInputs.forEach(inputId => {
+            const input = document.getElementById(inputId);
+            if (input) {
+                input.addEventListener('input', (e) => {
+                    const searchTerm = e.target.value.toLowerCase();
+                    const tableType = inputId.replace('Search', '');
+                    filterTable(tableType, searchTerm);
+                });
+            }
+        });
+    }
+
+    function filterTable(type, searchTerm) {
+        const tbody = document.getElementById(`${type}TableBody`);
+        const rows = tbody.getElementsByTagName('tr');
+
+        Array.from(rows).forEach(row => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(searchTerm) ? '' : 'none';
+        });
+    }
+    async function handleLogout() {
+        try {
+            const result = await jwtAuth.logout();
+            if (result.success) {
+                alert('Successfully logged out!');
+                // Clear any local storage or session data
+                localStorage.clear();
+                sessionStorage.clear();
+                // Redirect to login page
+                window.location.href = 'index.html';
+            } else {
+                alert('Logout failed. Please try again.');
+            }
+        } catch (error) {
+            console.error('Logout error:', error);
+            alert('Logout failed. Please try again.');
+        }
+    }
+
+
+    // Initialize everything
+    document.addEventListener('DOMContentLoaded', async () => {
+        // Check authentication first
+        const isAuthenticated = await jwtAuth.requireAuth();
+        if (!isAuthenticated) {
+            return; // Stop initialization if not authenticated
+        }
+
+        initNavigation();
+        initForms();
+        initSearch();
+        await loadDashboardData();
+
+        // Close modals when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) {
+                e.target.style.display = 'none';
+            }
+        });
+    });
+
+    // Make functions global for onclick handlers
+    window.openModal = openModal;
+    window.closeModal = closeModal;
+    window.editHotel = editHotel;
+    window.editTour = editTour;
+    window.editTransport = editTransport;
+    window.editBooking = editBooking;
+    window.editUser = editUser;
+    window.deleteHotel = deleteHotel;
+    window.deleteTour = deleteTour;
+    window.deleteTransport = deleteTransport;
+    window.deleteBooking = deleteBooking;
+    window.deleteUser = deleteUser;
+</script>
+</body>
+</html>
