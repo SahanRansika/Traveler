@@ -24,5 +24,6 @@ Other: MySQL (database), Maven (build tool), Postman (API testing), IntelliJ IDE
 ![Admin Panel](screenshots/admin-panel.png)
 *Admin interface for managing users and content*
 
-## Link to the Demo Video
+## Link to the Demo Video You tube :
+https://youtu.be/aYBYdrHamnU
 
