@@ -8,21 +8,21 @@ Other: MySQL (database), Maven (build tool), Postman (API testing), IntelliJ IDE
 
 ## 📸 Screenshots
 
-### Home Page
-![Home Page](screenshots/home-page.png)
-*Clean landing page with call-to-action buttons*
+### Start page
 
-### Dashboard
-![Dashboard](screenshots/dashboard.png)
-*User dashboard showing analytics and recent activity*
+<img width="1919" height="1079" alt="Screenshot 2025-09-21 223603" src="https://github.com/user-attachments/assets/0d487531-7e23-4712-ad50-5a2f02e2d604" />
+
+### Home Dashboard
+<img width="1899" height="1079" alt="Screenshot 2025-09-21 224311" src="https://github.com/user-attachments/assets/b43d2eea-fe8f-4c1e-9792-85086c0cd527" />
+
 
 ### User Profile Form
-![Profile Form](screenshots/profile-form.png)
-*Interactive form for user profile management*
+
+<img width="1919" height="1079" alt="Screenshot 2025-09-21 224343" src="https://github.com/user-attachments/assets/fbe2dd0d-68b3-47b5-ada2-39916152ab14" />
 
 ### Admin Panel
-![Admin Panel](screenshots/admin-panel.png)
-*Admin interface for managing users and content*
+<img width="1919" height="1079" alt="Screenshot 2025-09-21 224411" src="https://github.com/user-attachments/assets/2b4c0e94-2bb1-4e2f-be44-cbe974c76a80" />
+
 
 ## Link to the Demo Video You tube :
 https://youtu.be/aYBYdrHamnU
