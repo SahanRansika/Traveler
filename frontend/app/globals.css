@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+@theme {
+  /* Dark theme tokens */
+  --color-base: #0a0a0a;
+  --color-surface: #141414;
+  --color-line: #2a2a2a;
+  --color-fg: #f5f5f5;
+  --color-muted: #a3a3a3;
+
+  /* Accents (same yellow as the buttons) */
+  --color-sun: #f0a53a;
+  --color-lagoon: #1f8a8a;
+
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-jakarta), system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
+  }
+  body {
+    @apply bg-base text-fg font-sans antialiased;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-sun;
+  }
+}
+
+/* =====================================
+   SCROLLBAR (black track, button-yellow thumb)
+====================================== */
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-sun);
+  border-radius: 9999px;
+  border: 1px solid #000;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ffb94d;
+}
+
+/* Firefox */
+@supports not selector(::-webkit-scrollbar) {
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-sun) #000;
+  }
+}
