@@ -58,6 +58,12 @@
       "regex": "^/signup(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/signup(?:/)?$"
+    },
+    {
+      "page": "/transport-booking",
+      "regex": "^/transport\\-booking(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/transport\\-booking(?:/)?$"
     }
   ],
   "dataRoutes": [],

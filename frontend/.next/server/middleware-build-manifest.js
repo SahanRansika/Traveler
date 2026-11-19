@@ -7,9 +7,9 @@ globalThis.__BUILD_MANIFEST = {
     "static/chunks/0cz1d0mv5g_q7.js"
   ],
   "lowPriorityFiles": [
-    "static/EDbZCi1hEnoQu5roBj-8s/_buildManifest.js",
-    "static/EDbZCi1hEnoQu5roBj-8s/_ssgManifest.js",
-    "static/EDbZCi1hEnoQu5roBj-8s/_clientMiddlewareManifest.js"
+    "static/CKV2nXgjWlvm8UBBgtjqD/_buildManifest.js",
+    "static/CKV2nXgjWlvm8UBBgtjqD/_ssgManifest.js",
+    "static/CKV2nXgjWlvm8UBBgtjqD/_clientMiddlewareManifest.js"
   ],
   "rootMainFiles": [
     "static/chunks/310vm2bl3xxpt.js",
@@ -76,6 +76,17 @@ globalThis.__BUILD_MANIFEST = {
       ]
     },
     "/signup/page": {
+      "otherChunks": [
+        "static/chunks/310vm2bl3xxpt.js",
+        "static/chunks/1wnov70f88xjy.js",
+        "static/chunks/39_j1bdzreq0m.js",
+        "static/chunks/0c1ad7rcpjghx.js"
+      ],
+      "runtimeModuleIds": [
+        94553
+      ]
+    },
+    "/transport-booking/page": {
       "otherChunks": [
         "static/chunks/310vm2bl3xxpt.js",
         "static/chunks/1wnov70f88xjy.js",

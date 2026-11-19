@@ -4,5 +4,6 @@
   "/hotel-booking/page": "app/hotel-booking/page.js",
   "/page": "app/page.js",
   "/signin/page": "app/signin/page.js",
-  "/signup/page": "app/signup/page.js"
+  "/signup/page": "app/signup/page.js",
+  "/transport-booking/page": "app/transport-booking/page.js"
 }

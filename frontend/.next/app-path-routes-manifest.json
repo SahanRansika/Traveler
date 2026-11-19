@@ -4,5 +4,6 @@
   "/hotel-booking/page": "/hotel-booking",
   "/page": "/",
   "/signin/page": "/signin",
-  "/signup/page": "/signup"
+  "/signup/page": "/signup",
+  "/transport-booking/page": "/transport-booking"
 }
