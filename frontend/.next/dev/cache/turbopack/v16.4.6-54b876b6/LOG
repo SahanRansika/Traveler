@@ -43,3 +43,16 @@ FAM | META SEQ | SST SEQ         | RANGE
     |          | 00000001 00000002 00000003 00000004 00000006 00000007 00000008 00000009 00000010 00000011 00000012 00000013 SST DELETED
     |          | 00000016 META DELETED
     |          | 00000017 META DELETED
+Time 2026-11-19T14:44:55.8453796Z
+Commit 00000029 1020 keys in 27ms 869µs
+FAM | META SEQ | SST SEQ         | RANGE
+  2 | 00000027 | 00000024 SST    |   [================================================================================================] | 078941c24718cedc-ffdafb0cb41bceff (0 MiB, fresh, 114570 bytes, 93 entries, 0 tombstones)
+  1 | 00000028 | 00000025 SST    | [==================================================================================================] | 003c2496505310d7-ffdafb0cb41bceff (0 MiB, fresh, 248867 bytes, 926 entries, 0 tombstones)
+  0 | 00000029 | 00000026 SST    |                                                                             O                        | c44bdff4074eecdb-c44bdff4074eecdb (0 MiB, fresh, 38 bytes, 1 entries, 0 tombstones)
+Time 2026-11-19T14:50:58.9860078Z
+Commit 00000037 45134 keys in 67ms 642µs 900ns
+FAM | META SEQ | SST SEQ         | RANGE
+  0 | 00000034 | 00000033 SST    |                                                                             O                        | c44bdff4074eecdb-c44bdff4074eecdb (0 MiB, fresh, 38 bytes, 1 entries, 0 tombstones)
+  3 | 00000035 | 00000031 SST    | [==================================================================================================] | 001062c929837d47-fffd72e21c41cd55 (0 MiB, fresh, 117061 bytes, 9715 entries, 0 tombstones)
+  2 | 00000036 | 00000030 SST    | [==================================================================================================] | 000162bda900bf14-fffec925b18eeb5e (10 MiB, fresh, 10663050 bytes, 12314 entries, 0 tombstones)
+  1 | 00000037 | 00000032 SST    | [==================================================================================================] | 000162bda900bf14-fffec925b18eeb5e (1 MiB, fresh, 1971080 bytes, 23104 entries, 0 tombstones)

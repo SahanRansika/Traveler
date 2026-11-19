@@ -22,12 +22,20 @@ export default function Navbar() {
             </li>
           ))}
         </ul>
-        <Link
-          href="/#planner"
-          className="rounded-full bg-sun px-5 py-2 text-sm font-semibold text-black hover:bg-black hover:text-sun"
-        >
-          Plan a trip
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link
+            href="/signin"
+            className="rounded-full bg-sun px-5 py-2 text-sm font-semibold text-black hover:bg-black hover:text-sun"
+          >
+            Sign in
+          </Link>
+          <Link
+            href="/signup"
+            className="rounded-full bg-sun px-5 py-2 text-sm font-semibold text-black hover:bg-black hover:text-sun"
+          >
+            Sign up
+          </Link>
+        </div>
       </nav>
     </header>
   );
