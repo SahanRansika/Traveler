@@ -15,6 +15,7 @@ const services = [
   {
     title: "Trip planning",
     text: "Choose destinations, dates, stay and transport in one planner and see your full itinerary before you pay.",
+    href: "/travel-booking",
   },
 ];
 

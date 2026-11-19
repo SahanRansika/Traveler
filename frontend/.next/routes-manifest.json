@@ -64,6 +64,12 @@
       "regex": "^/transport\\-booking(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/transport\\-booking(?:/)?$"
+    },
+    {
+      "page": "/travel-booking",
+      "regex": "^/travel\\-booking(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/travel\\-booking(?:/)?$"
     }
   ],
   "dataRoutes": [],
