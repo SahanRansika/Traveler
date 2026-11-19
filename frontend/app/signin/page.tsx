@@ -11,7 +11,28 @@ export default function SignInPage() {
     <main className="auth-page fixed inset-0 z-20 overflow-hidden">
       <Hero />
       <div className="absolute inset-0 flex items-center justify-center px-4 py-20">
-        <section className="w-full max-w-[390px] rounded-2xl border border-white/10 bg-black/45 p-5 shadow-2xl backdrop-blur-md sm:p-6">
+        <section className="relative w-full max-w-[390px] rounded-2xl border border-white/10 bg-black/45 p-5 shadow-2xl backdrop-blur-md sm:p-6">
+          <Link
+            href="/"
+            aria-label="Close sign in"
+            className="absolute right-4 top-4 rounded-full p-1 text-white transition-colors hover:text-sun"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M18 6 6 18" />
+              <path d="m6 6 12 12" />
+            </svg>
+          </Link>
           <Link href="/" className="font-display text-xl font-semibold text-fg">
             Traveler
           </Link>
