@@ -5,6 +5,7 @@ const services = [
   {
     title: "Hotel booking",
     text: "Compare stays across Sri Lanka, from guesthouses to beach resorts, and reserve a room for your dates.",
+    href: "/hotel-booking",
   },
   {
     title: "Transport booking",
@@ -81,7 +82,13 @@ export default function HomePage() {
           <div className="mt-10 grid gap-10 md:grid-cols-3">
             {services.map((s) => (
               <div key={s.title} className="border-t-4 border-sun pt-5">
-                <h3 className="text-xl font-semibold">{s.title}</h3>
+                {s.href ? (
+                  <Link href={s.href} className="text-xl font-semibold hover:text-sun">
+                    {s.title}
+                  </Link>
+                ) : (
+                  <h3 className="text-xl font-semibold">{s.title}</h3>
+                )}
                 <p className="mt-3 leading-7 text-muted">{s.text}</p>
               </div>
             ))}
