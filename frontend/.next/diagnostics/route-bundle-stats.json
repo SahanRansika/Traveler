@@ -1,10 +1,49 @@
 [
   {
     "route": "/",
-    "firstLoadUncompressedJsBytes": 467496,
+    "firstLoadUncompressedJsBytes": 474189,
     "firstLoadChunkPaths": [
-      ".next\\static\\chunks\\08mika-44sn50.js",
-      ".next\\static\\chunks\\3iesphr9nkhci.js",
+      ".next\\static\\chunks\\3puz0q9u0c9no.js",
+      ".next\\static\\chunks\\2gwe8yudhrsqc.js",
+      ".next\\static\\chunks\\310vm2bl3xxpt.js",
+      ".next\\static\\chunks\\1wnov70f88xjy.js",
+      ".next\\static\\chunks\\39_j1bdzreq0m.js",
+      ".next\\static\\chunks\\0c1ad7rcpjghx.js",
+      ".next\\static\\chunks\\turbopack-2u1d16houkiyo.js"
+    ]
+  },
+  {
+    "route": "/signin",
+    "firstLoadUncompressedJsBytes": 474189,
+    "firstLoadChunkPaths": [
+      ".next\\static\\chunks\\3puz0q9u0c9no.js",
+      ".next\\static\\chunks\\2gwe8yudhrsqc.js",
+      ".next\\static\\chunks\\310vm2bl3xxpt.js",
+      ".next\\static\\chunks\\1wnov70f88xjy.js",
+      ".next\\static\\chunks\\39_j1bdzreq0m.js",
+      ".next\\static\\chunks\\0c1ad7rcpjghx.js",
+      ".next\\static\\chunks\\turbopack-2u1d16houkiyo.js"
+    ]
+  },
+  {
+    "route": "/signup",
+    "firstLoadUncompressedJsBytes": 474189,
+    "firstLoadChunkPaths": [
+      ".next\\static\\chunks\\3puz0q9u0c9no.js",
+      ".next\\static\\chunks\\2gwe8yudhrsqc.js",
+      ".next\\static\\chunks\\310vm2bl3xxpt.js",
+      ".next\\static\\chunks\\1wnov70f88xjy.js",
+      ".next\\static\\chunks\\39_j1bdzreq0m.js",
+      ".next\\static\\chunks\\0c1ad7rcpjghx.js",
+      ".next\\static\\chunks\\turbopack-2u1d16houkiyo.js"
+    ]
+  },
+  {
+    "route": "/hotel-booking",
+    "firstLoadUncompressedJsBytes": 469374,
+    "firstLoadChunkPaths": [
+      ".next\\static\\chunks\\3puz0q9u0c9no.js",
+      ".next\\static\\chunks\\30z7w_k9l6n56.js",
       ".next\\static\\chunks\\310vm2bl3xxpt.js",
       ".next\\static\\chunks\\1wnov70f88xjy.js",
       ".next\\static\\chunks\\39_j1bdzreq0m.js",
@@ -14,9 +53,9 @@
   },
   {
     "route": "/_not-found",
-    "firstLoadUncompressedJsBytes": 464932,
+    "firstLoadUncompressedJsBytes": 466223,
     "firstLoadChunkPaths": [
-      ".next\\static\\chunks\\08mika-44sn50.js",
+      ".next\\static\\chunks\\3puz0q9u0c9no.js",
       ".next\\static\\chunks\\310vm2bl3xxpt.js",
       ".next\\static\\chunks\\1wnov70f88xjy.js",
       ".next\\static\\chunks\\39_j1bdzreq0m.js",

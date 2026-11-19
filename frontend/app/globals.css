@@ -24,6 +24,12 @@
   body {
     @apply bg-base text-fg font-sans antialiased;
   }
+  body:has(.auth-page) {
+    overflow: hidden;
+  }
+  body:has(.auth-page) footer {
+    display: none;
+  }
   :focus-visible {
     @apply outline-2 outline-offset-2 outline-sun;
   }
