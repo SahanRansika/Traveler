@@ -13,9 +13,71 @@ const images = [
 const lines = ["Explore the world.", "Travel your way."];
 const full = lines.join("\n");
 
+type Country = {
+  name: string;
+  code: string;
+  flag: string;
+  capitals: string[];
+};
+
+const fallbackCountries: Country[] = [
+  { name: "Sri Lanka", code: "LK", flag: "https://flagcdn.com/w40/lk.png", capitals: ["Colombo", "Sri Jayawardenepura Kotte"] },
+  { name: "India", code: "IN", flag: "https://flagcdn.com/w40/in.png", capitals: ["New Delhi"] },
+  { name: "United States", code: "US", flag: "https://flagcdn.com/w40/us.png", capitals: ["Washington, D.C."] },
+  { name: "United Kingdom", code: "GB", flag: "https://flagcdn.com/w40/gb.png", capitals: ["London"] },
+  { name: "Australia", code: "AU", flag: "https://flagcdn.com/w40/au.png", capitals: ["Canberra"] },
+];
+
 export default function Hero() {
   const [text, setText] = useState("");
   const [slide, setSlide] = useState(0);
+  const [showPlanner, setShowPlanner] = useState(false);
+  const [plannerType, setPlannerType] = useState("");
+  const [countries, setCountries] = useState<Country[]>(fallbackCountries);
+  const [countryCode, setCountryCode] = useState("");
+  const [location, setLocation] = useState("");
+  const [guests, setGuests] = useState(1);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    fetch("https://restcountries.com/v3.1/all?fields=name,cca2,flags,capital", {
+      signal: controller.signal,
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error("Could not load countries");
+        return response.json();
+      })
+      .then((data: Array<{ name: { common: string }; cca2: string; flags: { png: string }; capital?: string[] }>) => {
+        const loaded = data
+          .map((country) => ({
+            name: country.name.common,
+            code: country.cca2,
+            flag: country.flags?.png || `https://flagcdn.com/w40/${country.cca2.toLowerCase()}.png`,
+            capitals: country.capital || [],
+          }))
+          .sort((a, b) => a.name.localeCompare(b.name));
+        if (loaded.length) setCountries(loaded);
+      })
+      .catch(() => undefined);
+
+    return () => controller.abort();
+  }, []);
+
+  useEffect(() => {
+    if (!showPlanner) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setShowPlanner(false);
+    };
+    document.addEventListener("keydown", closeOnEscape);
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.removeEventListener("keydown", closeOnEscape);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [showPlanner]);
 
   // Typewriter: types, pauses, restarts
   useEffect(() => {
@@ -73,14 +135,160 @@ export default function Hero() {
           book your transport and plan the whole trip, all in one place.
         </p>
         <div className="mt-8 flex flex-wrap gap-4">
-          <Link href="/#planner" className="rounded-full bg-sun px-7 py-3 font-semibold text-black hover:bg-black hover:text-sun">
+          <button
+            type="button"
+            onClick={() => setShowPlanner(true)}
+            className="rounded-full bg-sun px-7 py-3 font-semibold text-black hover:bg-black hover:text-sun"
+          >
             Get started
-          </Link>
+          </button>
           <Link href="/#services" className="rounded-full border border-white/60 px-7 py-3 font-semibold hover:bg-white/10">
             See what Traveler does
           </Link>
         </div>
       </div>
+
+      {showPlanner && (
+        <div
+          className="absolute inset-0 z-40 flex items-center justify-center bg-black/35 px-4 py-20 backdrop-blur-[2px]"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="plan-booking-title"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) setShowPlanner(false);
+          }}
+        >
+          <section className="relative w-full max-w-[390px] rounded-2xl border border-white/15 bg-black/65 p-5 shadow-2xl backdrop-blur-md sm:p-6">
+            <button
+              type="button"
+              aria-label="Close Plan Booking"
+              onClick={() => setShowPlanner(false)}
+              className="absolute right-4 top-4 rounded-full p-1 text-white transition-colors hover:text-sun"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M18 6 6 18" />
+                <path d="m6 6 12 12" />
+              </svg>
+            </button>
+
+            <h2 id="plan-booking-title" className="font-display text-3xl font-semibold">
+              Plan Booking
+            </h2>
+
+            <form
+              className="mt-5 space-y-4"
+              onSubmit={(event) => {
+                event.preventDefault();
+              }}
+            >
+              <div>
+                <label htmlFor="planner-type" className="mb-1.5 block text-sm font-medium">
+                  Planner type
+                </label>
+                <select
+                  id="planner-type"
+                  value={plannerType}
+                  onChange={(event) => setPlannerType(event.target.value)}
+                  required
+                  className="w-full rounded-lg border border-white/15 bg-black/70 px-3 py-2.5 text-sm text-white focus:border-sun focus:outline-none"
+                >
+                  <option value="" disabled>Select planner type</option>
+                  <option value="hotel">Hotel</option>
+                  <option value="transport">Transport</option>
+                  <option value="travel">Travel</option>
+                </select>
+              </div>
+
+              <div>
+                <label htmlFor="destination-country" className="mb-1.5 block text-sm font-medium">
+                  Destination country
+                </label>
+                <div className="flex items-center gap-2 rounded-lg border border-white/15 bg-black/70 px-3">
+                  {countryCode && (
+                    <img
+                      src={countries.find((country) => country.code === countryCode)?.flag}
+                      alt=""
+                      className="h-5 w-7 rounded-sm object-cover"
+                    />
+                  )}
+                  <select
+                    id="destination-country"
+                    value={countryCode}
+                    onChange={(event) => {
+                      setCountryCode(event.target.value);
+                      setLocation("");
+                    }}
+                    required
+                    className="min-w-0 flex-1 bg-transparent py-2.5 text-sm text-white focus:outline-none"
+                  >
+                    <option value="" disabled>Select a country</option>
+                    {countries.map((country) => (
+                      <option key={country.code} value={country.code}>
+                        {country.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="destination-location" className="mb-1.5 block text-sm font-medium">
+                  Location
+                </label>
+                <select
+                  id="destination-location"
+                  value={location}
+                  onChange={(event) => setLocation(event.target.value)}
+                  required
+                  disabled={!countryCode}
+                  className="w-full rounded-lg border border-white/15 bg-black/70 px-3 py-2.5 text-sm text-white focus:border-sun focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  <option value="" disabled>Select a location</option>
+                  {countries
+                    .find((country) => country.code === countryCode)
+                    ?.capitals.map((capital) => (
+                      <option key={capital} value={capital}>{capital}</option>
+                    ))}
+                </select>
+              </div>
+
+              <div>
+                <label htmlFor="guest-count" className="mb-1.5 block text-sm font-medium">
+                  Guest count
+                </label>
+                <input
+                  id="guest-count"
+                  type="number"
+                  min="1"
+                  max="50"
+                  value={guests}
+                  onChange={(event) => setGuests(Math.max(1, Number(event.target.value) || 1))}
+                  required
+                  className="w-full rounded-lg border border-white/15 bg-black/70 px-3 py-2.5 text-sm text-white focus:border-sun focus:outline-none"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="w-full rounded-full bg-sun px-5 py-2.5 text-sm font-semibold text-black hover:bg-black hover:text-sun"
+              >
+                Continue
+              </button>
+            </form>
+          </section>
+        </div>
+      )}
     </section>
   );
 }

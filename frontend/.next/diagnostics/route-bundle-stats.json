@@ -1,10 +1,10 @@
 [
   {
     "route": "/",
-    "firstLoadUncompressedJsBytes": 468786,
+    "firstLoadUncompressedJsBytes": 473842,
     "firstLoadChunkPaths": [
       ".next\\static\\chunks\\3puz0q9u0c9no.js",
-      ".next\\static\\chunks\\3epv4c-fqks3d.js",
+      ".next\\static\\chunks\\2bn73aou3hh7e.js",
       ".next\\static\\chunks\\310vm2bl3xxpt.js",
       ".next\\static\\chunks\\1wnov70f88xjy.js",
       ".next\\static\\chunks\\39_j1bdzreq0m.js",
@@ -14,10 +14,10 @@
   },
   {
     "route": "/signin",
-    "firstLoadUncompressedJsBytes": 468786,
+    "firstLoadUncompressedJsBytes": 473842,
     "firstLoadChunkPaths": [
       ".next\\static\\chunks\\3puz0q9u0c9no.js",
-      ".next\\static\\chunks\\3epv4c-fqks3d.js",
+      ".next\\static\\chunks\\2bn73aou3hh7e.js",
       ".next\\static\\chunks\\310vm2bl3xxpt.js",
       ".next\\static\\chunks\\1wnov70f88xjy.js",
       ".next\\static\\chunks\\39_j1bdzreq0m.js",
@@ -27,10 +27,10 @@
   },
   {
     "route": "/signup",
-    "firstLoadUncompressedJsBytes": 468786,
+    "firstLoadUncompressedJsBytes": 473842,
     "firstLoadChunkPaths": [
       ".next\\static\\chunks\\3puz0q9u0c9no.js",
-      ".next\\static\\chunks\\3epv4c-fqks3d.js",
+      ".next\\static\\chunks\\2bn73aou3hh7e.js",
       ".next\\static\\chunks\\310vm2bl3xxpt.js",
       ".next\\static\\chunks\\1wnov70f88xjy.js",
       ".next\\static\\chunks\\39_j1bdzreq0m.js",
