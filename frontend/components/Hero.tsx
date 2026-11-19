@@ -201,12 +201,12 @@ export default function Hero() {
                   value={plannerType}
                   onChange={(event) => setPlannerType(event.target.value)}
                   required
-                  className="w-full rounded-lg border border-white/15 bg-black/70 px-3 py-2.5 text-sm text-white focus:border-sun focus:outline-none"
+                  className="w-full cursor-pointer rounded-lg border border-sun bg-sun px-3 py-2.5 text-sm font-semibold text-black focus:border-sun focus:outline-none"
                 >
-                  <option value="" disabled>Select planner type</option>
-                  <option value="hotel">Hotel</option>
-                  <option value="transport">Transport</option>
-                  <option value="travel">Travel</option>
+                  <option value="" disabled className="bg-black text-white">Select planner type</option>
+                  <option value="hotel" className="bg-black text-white">Hotel</option>
+                  <option value="transport" className="bg-black text-white">Transport</option>
+                  <option value="travel" className="bg-black text-white">Travel</option>
                 </select>
               </div>
 
@@ -214,12 +214,12 @@ export default function Hero() {
                 <label htmlFor="destination-country" className="mb-1.5 block text-sm font-medium">
                   Destination country
                 </label>
-                <div className="flex items-center gap-2 rounded-lg border border-white/15 bg-black/70 px-3">
+                <div className="flex items-center gap-2 rounded-lg border border-sun bg-sun px-3 text-black">
                   {countryCode && (
                     <img
                       src={countries.find((country) => country.code === countryCode)?.flag}
                       alt=""
-                      className="h-5 w-7 rounded-sm object-cover"
+                      className="h-5 w-7 rounded-sm border border-black/20 object-cover"
                     />
                   )}
                   <select
@@ -230,11 +230,11 @@ export default function Hero() {
                       setLocation("");
                     }}
                     required
-                    className="min-w-0 flex-1 bg-transparent py-2.5 text-sm text-white focus:outline-none"
+                    className="min-w-0 flex-1 cursor-pointer bg-transparent py-2.5 text-sm font-semibold text-black focus:outline-none"
                   >
-                    <option value="" disabled>Select a country</option>
+                    <option value="" disabled className="bg-black text-white">Select a country</option>
                     {countries.map((country) => (
-                      <option key={country.code} value={country.code}>
+                      <option key={country.code} value={country.code} className="bg-black text-white">
                         {country.name}
                       </option>
                     ))}
@@ -252,13 +252,13 @@ export default function Hero() {
                   onChange={(event) => setLocation(event.target.value)}
                   required
                   disabled={!countryCode}
-                  className="w-full rounded-lg border border-white/15 bg-black/70 px-3 py-2.5 text-sm text-white focus:border-sun focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+                  className="w-full cursor-pointer rounded-lg border border-sun bg-sun px-3 py-2.5 text-sm font-semibold text-black focus:border-sun focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
                 >
-                  <option value="" disabled>Select a location</option>
+                  <option value="" disabled className="bg-black text-white">Select a location</option>
                   {countries
                     .find((country) => country.code === countryCode)
                     ?.capitals.map((capital) => (
-                      <option key={capital} value={capital}>{capital}</option>
+                      <option key={capital} value={capital} className="bg-black text-white">{capital}</option>
                     ))}
                 </select>
               </div>

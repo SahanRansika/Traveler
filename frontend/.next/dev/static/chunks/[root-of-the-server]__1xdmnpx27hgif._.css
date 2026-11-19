@@ -476,6 +476,10 @@
 @layer components;
 
 @layer utilities {
+  .visible {
+    visibility: visible;
+  }
+
   .absolute {
     position: absolute;
   }
@@ -656,6 +660,10 @@
     animation: var(--animate-pulse);
   }
 
+  .cursor-pointer {
+    cursor: pointer;
+  }
+
   .flex-wrap {
     flex-wrap: wrap;
   }
@@ -746,6 +754,16 @@
   .border-t-4 {
     border-top-style: var(--tw-border-style);
     border-top-width: 4px;
+  }
+
+  .border-black\/20 {
+    border-color: #0003;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    .border-black\/20 {
+      border-color: color-mix(in oklab, var(--color-black) 20%, transparent);
+    }
   }
 
   .border-line {
