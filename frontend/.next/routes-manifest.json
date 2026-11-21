@@ -21,7 +21,43 @@
     "afterFiles": [],
     "fallback": []
   },
-  "dynamicRoutes": [],
+  "dynamicRoutes": [
+    {
+      "page": "/api/bookings/[reference]",
+      "regex": "^/api/bookings/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPreference": "nxtPreference"
+      },
+      "namedRegex": "^/api/bookings/(?<nxtPreference>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/booking/[category]/[id]",
+      "regex": "^/booking/([^/]+?)/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPcategory": "nxtPcategory",
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/booking/(?<nxtPcategory>[^/]+?)/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/checkout/[category]/[id]",
+      "regex": "^/checkout/([^/]+?)/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPcategory": "nxtPcategory",
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/checkout/(?<nxtPcategory>[^/]+?)/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/transaction/card/[category]/[id]",
+      "regex": "^/transaction/card/([^/]+?)/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPcategory": "nxtPcategory",
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/transaction/card/(?<nxtPcategory>[^/]+?)/(?<nxtPid>[^/]+?)(?:/)?$"
+    }
+  ],
   "staticRoutes": [
     {
       "page": "/",
@@ -42,6 +78,18 @@
       "namedRegex": "^/_not\\-found(?:/)?$"
     },
     {
+      "page": "/api/bookings",
+      "regex": "^/api/bookings(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/bookings(?:/)?$"
+    },
+    {
+      "page": "/booking",
+      "regex": "^/booking(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/booking(?:/)?$"
+    },
+    {
       "page": "/hotel-booking",
       "regex": "^/hotel\\-booking(?:/)?$",
       "routeKeys": {},
@@ -58,6 +106,18 @@
       "regex": "^/signup(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/signup(?:/)?$"
+    },
+    {
+      "page": "/transport-booking",
+      "regex": "^/transport\\-booking(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/transport\\-booking(?:/)?$"
+    },
+    {
+      "page": "/travel-booking",
+      "regex": "^/travel\\-booking(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/travel\\-booking(?:/)?$"
     }
   ],
   "dataRoutes": [],

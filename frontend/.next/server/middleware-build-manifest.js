@@ -7,9 +7,9 @@ globalThis.__BUILD_MANIFEST = {
     "static/chunks/0cz1d0mv5g_q7.js"
   ],
   "lowPriorityFiles": [
-    "static/EDbZCi1hEnoQu5roBj-8s/_buildManifest.js",
-    "static/EDbZCi1hEnoQu5roBj-8s/_ssgManifest.js",
-    "static/EDbZCi1hEnoQu5roBj-8s/_clientMiddlewareManifest.js"
+    "static/D3z-GozmkuUEYJJvDU3c8/_buildManifest.js",
+    "static/D3z-GozmkuUEYJJvDU3c8/_ssgManifest.js",
+    "static/D3z-GozmkuUEYJJvDU3c8/_clientMiddlewareManifest.js"
   ],
   "rootMainFiles": [
     "static/chunks/310vm2bl3xxpt.js",
@@ -53,6 +53,39 @@ globalThis.__BUILD_MANIFEST = {
         94553
       ]
     },
+    "/booking/page": {
+      "otherChunks": [
+        "static/chunks/310vm2bl3xxpt.js",
+        "static/chunks/1wnov70f88xjy.js",
+        "static/chunks/39_j1bdzreq0m.js",
+        "static/chunks/0c1ad7rcpjghx.js"
+      ],
+      "runtimeModuleIds": [
+        94553
+      ]
+    },
+    "/booking/[category]/[id]/page": {
+      "otherChunks": [
+        "static/chunks/310vm2bl3xxpt.js",
+        "static/chunks/1wnov70f88xjy.js",
+        "static/chunks/39_j1bdzreq0m.js",
+        "static/chunks/0c1ad7rcpjghx.js"
+      ],
+      "runtimeModuleIds": [
+        94553
+      ]
+    },
+    "/checkout/[category]/[id]/page": {
+      "otherChunks": [
+        "static/chunks/310vm2bl3xxpt.js",
+        "static/chunks/1wnov70f88xjy.js",
+        "static/chunks/39_j1bdzreq0m.js",
+        "static/chunks/0c1ad7rcpjghx.js"
+      ],
+      "runtimeModuleIds": [
+        94553
+      ]
+    },
     "/hotel-booking/page": {
       "otherChunks": [
         "static/chunks/310vm2bl3xxpt.js",
@@ -76,6 +109,39 @@ globalThis.__BUILD_MANIFEST = {
       ]
     },
     "/signup/page": {
+      "otherChunks": [
+        "static/chunks/310vm2bl3xxpt.js",
+        "static/chunks/1wnov70f88xjy.js",
+        "static/chunks/39_j1bdzreq0m.js",
+        "static/chunks/0c1ad7rcpjghx.js"
+      ],
+      "runtimeModuleIds": [
+        94553
+      ]
+    },
+    "/transaction/card/[category]/[id]/page": {
+      "otherChunks": [
+        "static/chunks/310vm2bl3xxpt.js",
+        "static/chunks/1wnov70f88xjy.js",
+        "static/chunks/39_j1bdzreq0m.js",
+        "static/chunks/0c1ad7rcpjghx.js"
+      ],
+      "runtimeModuleIds": [
+        94553
+      ]
+    },
+    "/transport-booking/page": {
+      "otherChunks": [
+        "static/chunks/310vm2bl3xxpt.js",
+        "static/chunks/1wnov70f88xjy.js",
+        "static/chunks/39_j1bdzreq0m.js",
+        "static/chunks/0c1ad7rcpjghx.js"
+      ],
+      "runtimeModuleIds": [
+        94553
+      ]
+    },
+    "/travel-booking/page": {
       "otherChunks": [
         "static/chunks/310vm2bl3xxpt.js",
         "static/chunks/1wnov70f88xjy.js",

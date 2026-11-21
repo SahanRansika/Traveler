@@ -1,41 +1,8 @@
 "use client";
 
 import { useState } from "react";
-
-const hotels = [
-  {
-    name: "Ocean View Resort",
-    location: "Galle, Sri Lanka",
-    price: "$120",
-    rating: "4.8",
-    image:
-      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    name: "Ella Mountain Hotel",
-    location: "Ella, Sri Lanka",
-    price: "$95",
-    rating: "4.7",
-    image:
-      "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    name: "Sigiriya Garden Inn",
-    location: "Sigiriya, Sri Lanka",
-    price: "$110",
-    rating: "4.9",
-    image:
-      "https://images.unsplash.com/photo-1551887373-7c1b8f8c1cc4?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    name: "Colombo City Hotel",
-    location: "Colombo, Sri Lanka",
-    price: "$105",
-    rating: "4.6",
-    image:
-      "https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=900&q=80",
-  },
-];
+import Link from "next/link";
+import { hotels } from "@/lib/bookings";
 
 export default function HotelBookingPage() {
   const [query, setQuery] = useState("");
@@ -94,12 +61,12 @@ export default function HotelBookingPage() {
                     {hotel.price}
                     <span className="text-xs font-normal text-muted"> / night</span>
                   </p>
-                  <button
-                    type="button"
+                  <Link
+                    href={`/booking/hotel/${hotel.id}`}
                     className="rounded-full bg-sun px-5 py-2.5 text-sm font-semibold text-black hover:bg-black hover:text-sun"
                   >
                     Booking
-                  </button>
+                  </Link>
                 </div>
               </div>
             </article>

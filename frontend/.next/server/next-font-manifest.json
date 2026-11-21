@@ -4,6 +4,18 @@
       "static/media/edb99fec956915f8-s.p.32sris142tqlb.woff2",
       "static/media/d8aeca813a9ab546-s.p.18rizl4rsrl42.woff2"
     ],
+    "[project]/app/booking/[category]/[id]/page": [
+      "static/media/edb99fec956915f8-s.p.32sris142tqlb.woff2",
+      "static/media/d8aeca813a9ab546-s.p.18rizl4rsrl42.woff2"
+    ],
+    "[project]/app/booking/page": [
+      "static/media/edb99fec956915f8-s.p.32sris142tqlb.woff2",
+      "static/media/d8aeca813a9ab546-s.p.18rizl4rsrl42.woff2"
+    ],
+    "[project]/app/checkout/[category]/[id]/page": [
+      "static/media/edb99fec956915f8-s.p.32sris142tqlb.woff2",
+      "static/media/d8aeca813a9ab546-s.p.18rizl4rsrl42.woff2"
+    ],
     "[project]/app/hotel-booking/page": [
       "static/media/edb99fec956915f8-s.p.32sris142tqlb.woff2",
       "static/media/d8aeca813a9ab546-s.p.18rizl4rsrl42.woff2"
@@ -17,6 +29,18 @@
       "static/media/d8aeca813a9ab546-s.p.18rizl4rsrl42.woff2"
     ],
     "[project]/app/signup/page": [
+      "static/media/edb99fec956915f8-s.p.32sris142tqlb.woff2",
+      "static/media/d8aeca813a9ab546-s.p.18rizl4rsrl42.woff2"
+    ],
+    "[project]/app/transaction/card/[category]/[id]/page": [
+      "static/media/edb99fec956915f8-s.p.32sris142tqlb.woff2",
+      "static/media/d8aeca813a9ab546-s.p.18rizl4rsrl42.woff2"
+    ],
+    "[project]/app/transport-booking/page": [
+      "static/media/edb99fec956915f8-s.p.32sris142tqlb.woff2",
+      "static/media/d8aeca813a9ab546-s.p.18rizl4rsrl42.woff2"
+    ],
+    "[project]/app/travel-booking/page": [
       "static/media/edb99fec956915f8-s.p.32sris142tqlb.woff2",
       "static/media/d8aeca813a9ab546-s.p.18rizl4rsrl42.woff2"
     ]

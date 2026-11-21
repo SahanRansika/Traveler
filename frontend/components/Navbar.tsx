@@ -3,15 +3,31 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const links = [
+const homeLinks = [
   { label: "Services", href: "/#services" },
-  { label: "Destinations", href: "/#destinations" },
+  { label: "Destination", href: "/#destinations" },
   { label: "About", href: "/#about" },
+];
+
+const bookingLinks = [
+  { label: "Hotel", href: "/hotel-booking" },
+  { label: "Transport", href: "/transport-booking" },
+  { label: "Travel", href: "/travel-booking" },
+  { label: "Booking", href: "/booking" },
 ];
 
 export default function Navbar() {
   const pathname = usePathname();
   const isAuthPage = pathname === "/signin" || pathname === "/signup";
+  const isBookingPage =
+    pathname === "/hotel-booking" ||
+    pathname === "/transport-booking" ||
+    pathname === "/travel-booking" ||
+    pathname === "/booking" ||
+    pathname.startsWith("/booking/") ||
+    pathname.startsWith("/checkout/") ||
+    pathname.startsWith("/transaction/card/");
+  const links = isBookingPage ? bookingLinks : homeLinks;
 
   return (
     <header className="absolute inset-x-0 top-0 z-30">
