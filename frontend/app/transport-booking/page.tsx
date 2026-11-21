@@ -1,41 +1,8 @@
 "use client";
 
 import { useState } from "react";
-
-const transports = [
-  {
-    name: "Colombo - Ella Train",
-    location: "Colombo to Ella",
-    price: "$18",
-    rating: "4.9",
-    image:
-      "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    name: "Private Car with Driver",
-    location: "Island-wide",
-    price: "$75",
-    rating: "4.8",
-    image:
-      "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    name: "Airport Transfer",
-    location: "Bandaranaike Airport",
-    price: "$35",
-    rating: "4.7",
-    image:
-      "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    name: "Scenic Bus Service",
-    location: "Kandy to Sigiriya",
-    price: "$12",
-    rating: "4.5",
-    image:
-      "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?auto=format&fit=crop&w=900&q=80",
-  },
-];
+import Link from "next/link";
+import { transports } from "@/lib/bookings";
 
 export default function TransportBookingPage() {
   const [query, setQuery] = useState("");
@@ -94,12 +61,12 @@ export default function TransportBookingPage() {
                     {transport.price}
                     <span className="text-xs font-normal text-muted"> / trip</span>
                   </p>
-                  <button
-                    type="button"
+                  <Link
+                    href={`/booking/transport/${transport.id}`}
                     className="rounded-full bg-sun px-5 py-2.5 text-sm font-semibold text-black hover:bg-black hover:text-sun"
                   >
                     Booking
-                  </button>
+                  </Link>
                 </div>
               </div>
             </article>

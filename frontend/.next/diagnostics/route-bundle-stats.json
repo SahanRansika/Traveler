@@ -1,9 +1,61 @@
 [
   {
-    "route": "/",
-    "firstLoadUncompressedJsBytes": 474390,
+    "route": "/checkout/[category]/[id]",
+    "firstLoadUncompressedJsBytes": 481356,
     "firstLoadChunkPaths": [
-      ".next\\static\\chunks\\1wd81x2izoy9d.js",
+      ".next\\static\\chunks\\1luwt_5zxoli3.js",
+      ".next\\static\\chunks\\3-olbwpanyjos.js",
+      ".next\\static\\chunks\\310vm2bl3xxpt.js",
+      ".next\\static\\chunks\\1wnov70f88xjy.js",
+      ".next\\static\\chunks\\39_j1bdzreq0m.js",
+      ".next\\static\\chunks\\0c1ad7rcpjghx.js",
+      ".next\\static\\chunks\\turbopack-2u1d16houkiyo.js"
+    ]
+  },
+  {
+    "route": "/travel-booking",
+    "firstLoadUncompressedJsBytes": 479181,
+    "firstLoadChunkPaths": [
+      ".next\\static\\chunks\\1luwt_5zxoli3.js",
+      ".next\\static\\chunks\\3wi28_ju_p0yf.js",
+      ".next\\static\\chunks\\310vm2bl3xxpt.js",
+      ".next\\static\\chunks\\1wnov70f88xjy.js",
+      ".next\\static\\chunks\\39_j1bdzreq0m.js",
+      ".next\\static\\chunks\\0c1ad7rcpjghx.js",
+      ".next\\static\\chunks\\turbopack-2u1d16houkiyo.js"
+    ]
+  },
+  {
+    "route": "/transport-booking",
+    "firstLoadUncompressedJsBytes": 479166,
+    "firstLoadChunkPaths": [
+      ".next\\static\\chunks\\1luwt_5zxoli3.js",
+      ".next\\static\\chunks\\2pdeywe-e8pri.js",
+      ".next\\static\\chunks\\310vm2bl3xxpt.js",
+      ".next\\static\\chunks\\1wnov70f88xjy.js",
+      ".next\\static\\chunks\\39_j1bdzreq0m.js",
+      ".next\\static\\chunks\\0c1ad7rcpjghx.js",
+      ".next\\static\\chunks\\turbopack-2u1d16houkiyo.js"
+    ]
+  },
+  {
+    "route": "/hotel-booking",
+    "firstLoadUncompressedJsBytes": 479150,
+    "firstLoadChunkPaths": [
+      ".next\\static\\chunks\\1luwt_5zxoli3.js",
+      ".next\\static\\chunks\\0qexu90yf65-c.js",
+      ".next\\static\\chunks\\310vm2bl3xxpt.js",
+      ".next\\static\\chunks\\1wnov70f88xjy.js",
+      ".next\\static\\chunks\\39_j1bdzreq0m.js",
+      ".next\\static\\chunks\\0c1ad7rcpjghx.js",
+      ".next\\static\\chunks\\turbopack-2u1d16houkiyo.js"
+    ]
+  },
+  {
+    "route": "/",
+    "firstLoadUncompressedJsBytes": 474454,
+    "firstLoadChunkPaths": [
+      ".next\\static\\chunks\\1luwt_5zxoli3.js",
       ".next\\static\\chunks\\2gwe8yudhrsqc.js",
       ".next\\static\\chunks\\310vm2bl3xxpt.js",
       ".next\\static\\chunks\\1wnov70f88xjy.js",
@@ -14,9 +66,9 @@
   },
   {
     "route": "/signin",
-    "firstLoadUncompressedJsBytes": 474390,
+    "firstLoadUncompressedJsBytes": 474454,
     "firstLoadChunkPaths": [
-      ".next\\static\\chunks\\1wd81x2izoy9d.js",
+      ".next\\static\\chunks\\1luwt_5zxoli3.js",
       ".next\\static\\chunks\\2gwe8yudhrsqc.js",
       ".next\\static\\chunks\\310vm2bl3xxpt.js",
       ".next\\static\\chunks\\1wnov70f88xjy.js",
@@ -27,9 +79,9 @@
   },
   {
     "route": "/signup",
-    "firstLoadUncompressedJsBytes": 474390,
+    "firstLoadUncompressedJsBytes": 474454,
     "firstLoadChunkPaths": [
-      ".next\\static\\chunks\\1wd81x2izoy9d.js",
+      ".next\\static\\chunks\\1luwt_5zxoli3.js",
       ".next\\static\\chunks\\2gwe8yudhrsqc.js",
       ".next\\static\\chunks\\310vm2bl3xxpt.js",
       ".next\\static\\chunks\\1wnov70f88xjy.js",
@@ -39,49 +91,22 @@
     ]
   },
   {
-    "route": "/travel-booking",
-    "firstLoadUncompressedJsBytes": 469617,
-    "firstLoadChunkPaths": [
-      ".next\\static\\chunks\\1wd81x2izoy9d.js",
-      ".next\\static\\chunks\\0jykxiz07gl0-.js",
-      ".next\\static\\chunks\\310vm2bl3xxpt.js",
-      ".next\\static\\chunks\\1wnov70f88xjy.js",
-      ".next\\static\\chunks\\39_j1bdzreq0m.js",
-      ".next\\static\\chunks\\0c1ad7rcpjghx.js",
-      ".next\\static\\chunks\\turbopack-2u1d16houkiyo.js"
-    ]
-  },
-  {
-    "route": "/transport-booking",
-    "firstLoadUncompressedJsBytes": 469583,
-    "firstLoadChunkPaths": [
-      ".next\\static\\chunks\\1wd81x2izoy9d.js",
-      ".next\\static\\chunks\\2dkaew0mxja2m.js",
-      ".next\\static\\chunks\\310vm2bl3xxpt.js",
-      ".next\\static\\chunks\\1wnov70f88xjy.js",
-      ".next\\static\\chunks\\39_j1bdzreq0m.js",
-      ".next\\static\\chunks\\0c1ad7rcpjghx.js",
-      ".next\\static\\chunks\\turbopack-2u1d16houkiyo.js"
-    ]
-  },
-  {
-    "route": "/hotel-booking",
-    "firstLoadUncompressedJsBytes": 469575,
-    "firstLoadChunkPaths": [
-      ".next\\static\\chunks\\1wd81x2izoy9d.js",
-      ".next\\static\\chunks\\30z7w_k9l6n56.js",
-      ".next\\static\\chunks\\310vm2bl3xxpt.js",
-      ".next\\static\\chunks\\1wnov70f88xjy.js",
-      ".next\\static\\chunks\\39_j1bdzreq0m.js",
-      ".next\\static\\chunks\\0c1ad7rcpjghx.js",
-      ".next\\static\\chunks\\turbopack-2u1d16houkiyo.js"
-    ]
-  },
-  {
     "route": "/_not-found",
-    "firstLoadUncompressedJsBytes": 466424,
+    "firstLoadUncompressedJsBytes": 466488,
     "firstLoadChunkPaths": [
-      ".next\\static\\chunks\\1wd81x2izoy9d.js",
+      ".next\\static\\chunks\\1luwt_5zxoli3.js",
+      ".next\\static\\chunks\\310vm2bl3xxpt.js",
+      ".next\\static\\chunks\\1wnov70f88xjy.js",
+      ".next\\static\\chunks\\39_j1bdzreq0m.js",
+      ".next\\static\\chunks\\0c1ad7rcpjghx.js",
+      ".next\\static\\chunks\\turbopack-2u1d16houkiyo.js"
+    ]
+  },
+  {
+    "route": "/booking/[category]/[id]",
+    "firstLoadUncompressedJsBytes": 466488,
+    "firstLoadChunkPaths": [
+      ".next\\static\\chunks\\1luwt_5zxoli3.js",
       ".next\\static\\chunks\\310vm2bl3xxpt.js",
       ".next\\static\\chunks\\1wnov70f88xjy.js",
       ".next\\static\\chunks\\39_j1bdzreq0m.js",

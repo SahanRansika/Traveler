@@ -21,7 +21,9 @@ export default function Navbar() {
   const isBookingPage =
     pathname === "/hotel-booking" ||
     pathname === "/transport-booking" ||
-    pathname === "/travel-booking";
+    pathname === "/travel-booking" ||
+    pathname.startsWith("/booking/") ||
+    pathname.startsWith("/checkout/");
   const links = isBookingPage ? bookingLinks : homeLinks;
 
   return (

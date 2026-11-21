@@ -1,4 +1,6 @@
 {
+  "/booking/[category]/[id]/page": "app/booking/[category]/[id]/page.js",
+  "/checkout/[category]/[id]/page": "app/checkout/[category]/[id]/page.js",
   "/hotel-booking/page": "app/hotel-booking/page.js",
   "/page": "app/page.js",
   "/signin/page": "app/signin/page.js",

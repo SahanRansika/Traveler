@@ -21,7 +21,26 @@
     "afterFiles": [],
     "fallback": []
   },
-  "dynamicRoutes": [],
+  "dynamicRoutes": [
+    {
+      "page": "/booking/[category]/[id]",
+      "regex": "^/booking/([^/]+?)/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPcategory": "nxtPcategory",
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/booking/(?<nxtPcategory>[^/]+?)/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/checkout/[category]/[id]",
+      "regex": "^/checkout/([^/]+?)/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPcategory": "nxtPcategory",
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/checkout/(?<nxtPcategory>[^/]+?)/(?<nxtPid>[^/]+?)(?:/)?$"
+    }
+  ],
   "staticRoutes": [
     {
       "page": "/",
