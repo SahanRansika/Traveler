@@ -61,6 +61,12 @@
       "namedRegex": "^/_not\\-found(?:/)?$"
     },
     {
+      "page": "/api/bookings",
+      "regex": "^/api/bookings(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/bookings(?:/)?$"
+    },
+    {
       "page": "/hotel-booking",
       "regex": "^/hotel\\-booking(?:/)?$",
       "routeKeys": {},

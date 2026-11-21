@@ -74,7 +74,7 @@ export default async function BookingDetailPage({ params }: PageProps) {
         <section className="rounded-2xl border border-line bg-surface p-6">
           <h2 className="font-display text-2xl">Payment</h2>
           <p className="mt-4 text-lg font-semibold text-sun">{booking.payment}</p>
-          <p className="mt-2 text-sm text-muted">Secure checkout. No hidden booking fees.</p>
+          <p className="mt-2 text-sm text-muted">Submit a booking request with no card details. Final availability and charges are confirmed by the provider.</p>
         </section>
 
         <section className="rounded-2xl border border-line bg-surface p-6">

@@ -151,6 +151,7 @@
     --font-sans: var(--font-jakarta), system-ui, sans-serif;
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
+    --color-red-400: #ff6568;
     --color-black: #000;
     --color-white: #fff;
     --spacing: .25rem;
@@ -202,6 +203,12 @@
     --color-muted: #a3a3a3;
     --color-sun: #f0a53a;
     --font-display: var(--font-fraunces), Georgia, serif;
+  }
+
+  @supports (color: lab(0% 0 0)) {
+    :root, :host {
+      --color-red-400: lab(63.7053% 60.7449 31.3109);
+    }
   }
 }
 
@@ -1300,6 +1307,10 @@
     color: var(--color-muted);
   }
 
+  .text-red-400 {
+    color: var(--color-red-400);
+  }
+
   .text-sun {
     color: var(--color-sun);
   }
@@ -1431,6 +1442,10 @@
 
   .disabled\:opacity-50:disabled {
     opacity: .5;
+  }
+
+  .disabled\:opacity-60:disabled {
+    opacity: .6;
   }
 
   @media (min-width: 40rem) {

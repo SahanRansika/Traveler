@@ -1,6 +1,7 @@
 {
   "/_global-error/page": "/_global-error",
   "/_not-found/page": "/_not-found",
+  "/api/bookings/route": "/api/bookings",
   "/booking/[category]/[id]/page": "/booking/[category]/[id]",
   "/checkout/[category]/[id]/page": "/checkout/[category]/[id]",
   "/hotel-booking/page": "/hotel-booking",
