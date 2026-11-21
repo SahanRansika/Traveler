@@ -743,6 +743,10 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .flex-col {
+    flex-direction: column;
+  }
+
   .flex-wrap {
     flex-wrap: wrap;
   }
@@ -1455,6 +1459,10 @@
 
     .sm\:grid-cols-2 {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .sm\:flex-row {
+      flex-direction: row;
     }
 
     .sm\:gap-3 {

@@ -8,6 +8,7 @@
   "/page": "app/page.js",
   "/signin/page": "app/signin/page.js",
   "/signup/page": "app/signup/page.js",
+  "/transaction/card/[category]/[id]/page": "app/transaction/card/[category]/[id]/page.js",
   "/transport-booking/page": "app/transport-booking/page.js",
   "/travel-booking/page": "app/travel-booking/page.js"
 }

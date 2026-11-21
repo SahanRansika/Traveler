@@ -39,6 +39,15 @@
         "nxtPid": "nxtPid"
       },
       "namedRegex": "^/checkout/(?<nxtPcategory>[^/]+?)/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/transaction/card/[category]/[id]",
+      "regex": "^/transaction/card/([^/]+?)/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPcategory": "nxtPcategory",
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/transaction/card/(?<nxtPcategory>[^/]+?)/(?<nxtPid>[^/]+?)(?:/)?$"
     }
   ],
   "staticRoutes": [

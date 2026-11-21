@@ -65,9 +65,17 @@ export default function CheckoutPage() {
             Your {booking.name} booking request is pending confirmation.
           </p>
           <p className="mt-5 font-mono text-sm text-sun">Reference: {reference}</p>
-          <Link href="/" className="mt-7 inline-block rounded-full bg-sun px-6 py-3 font-semibold text-black">
-            Back to home
-          </Link>
+          <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
+            <Link
+              href={`/transaction/card/${category}/${booking.id}?reference=${encodeURIComponent(reference)}`}
+              className="inline-block rounded-full bg-sun px-6 py-3 font-semibold text-black"
+            >
+              Continue to demo card
+            </Link>
+            <Link href="/" className="inline-block rounded-full border border-line px-6 py-3 font-semibold text-fg">
+              Back to home
+            </Link>
+          </div>
         </div>
       </main>
     );
