@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useParams, useSearchParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { getBooking, type BookingCategory } from "@/lib/bookings";
 
@@ -12,6 +12,7 @@ const TEST_CVV = "123";
 export default function CardTransactionPage() {
   const params = useParams<{ category: string; id: string }>();
   const searchParams = useSearchParams();
+  const router = useRouter();
   const category = params.category as BookingCategory;
   const validCategory = ["hotel", "transport", "travel"].includes(params.category);
   const booking = validCategory ? getBooking(category, params.id) : undefined;
@@ -22,7 +23,7 @@ export default function CardTransactionPage() {
   const [expiry, setExpiry] = useState("");
   const [cvv, setCvv] = useState("");
   const [error, setError] = useState("");
-  const [completed, setCompleted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   if (!booking) {
     return (
@@ -32,7 +33,7 @@ export default function CardTransactionPage() {
     );
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
 
@@ -54,25 +55,21 @@ export default function CardTransactionPage() {
       return;
     }
 
-    setCompleted(true);
-  }
-
-  if (completed) {
-    return (
-      <main className="mx-auto flex min-h-[100svh] max-w-3xl items-center px-5 pb-20 pt-28">
-        <div className="w-full rounded-3xl border border-line bg-surface p-8 text-center sm:p-12">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-sun text-3xl text-black">✓</div>
-          <h1 className="mt-6 font-display text-4xl">Card details verified</h1>
-          <p className="mt-3 text-muted">
-            No payment was processed and no card data was stored or transmitted.
-          </p>
-          {reference && <p className="mt-5 font-mono text-sm text-sun">Booking reference: {reference}</p>}
-          <Link href="/" className="mt-7 inline-block rounded-full bg-sun px-6 py-3 font-semibold text-black">
-            Back to home
-          </Link>
-        </div>
-      </main>
-    );
+    setSubmitting(true);
+    try {
+      if (!reference) throw new Error("Missing booking reference.");
+      const response = await fetch(`/api/bookings/${encodeURIComponent(reference)}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: "confirmed" }),
+      });
+      if (!response.ok) throw new Error("Could not confirm the booking.");
+      router.replace("/booking");
+    } catch (submissionError) {
+      setError(submissionError instanceof Error ? submissionError.message : "Could not confirm the booking.");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -181,9 +178,10 @@ export default function CardTransactionPage() {
 
           <button
             type="submit"
-            className="mt-6 w-full rounded-full bg-sun px-6 py-3 font-semibold text-black hover:bg-black hover:text-sun"
+            disabled={submitting}
+            className="mt-6 w-full rounded-full bg-sun px-6 py-3 font-semibold text-black hover:bg-black hover:text-sun disabled:cursor-not-allowed disabled:opacity-60"
           >
-            Verify card details
+            {submitting ? "Confirming..." : "Confirm payment"}
           </button>
         </form>
 

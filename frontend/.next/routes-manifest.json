@@ -23,6 +23,14 @@
   },
   "dynamicRoutes": [
     {
+      "page": "/api/bookings/[reference]",
+      "regex": "^/api/bookings/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPreference": "nxtPreference"
+      },
+      "namedRegex": "^/api/bookings/(?<nxtPreference>[^/]+?)(?:/)?$"
+    },
+    {
       "page": "/booking/[category]/[id]",
       "regex": "^/booking/([^/]+?)/([^/]+?)(?:/)?$",
       "routeKeys": {
@@ -74,6 +82,12 @@
       "regex": "^/api/bookings(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/api/bookings(?:/)?$"
+    },
+    {
+      "page": "/booking",
+      "regex": "^/booking(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/booking(?:/)?$"
     },
     {
       "page": "/hotel-booking",

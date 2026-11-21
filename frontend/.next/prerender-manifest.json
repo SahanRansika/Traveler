@@ -86,11 +86,39 @@
         "x-next-revalidate-tag-token"
       ]
     },
+    "/booking": {
+      "routeType": "page",
+      "response": "complete",
+      "compute": "static",
+      "htmlSize": 9180,
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "next-action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/booking",
+      "dataRoute": "/booking.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
     "/hotel-booking": {
       "routeType": "page",
       "response": "complete",
       "compute": "static",
-      "htmlSize": 13744,
+      "htmlSize": 13742,
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -174,7 +202,7 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
-      "htmlSize": 13776,
+      "htmlSize": 13774,
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -202,7 +230,7 @@
       "routeType": "page",
       "response": "complete",
       "compute": "static",
-      "htmlSize": 13815,
+      "htmlSize": 13813,
       "experimentalBypassFor": [
         {
           "type": "header",

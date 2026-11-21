@@ -1,8 +1,10 @@
 {
   "/_global-error/page": "app/_global-error/page.js",
   "/_not-found/page": "app/_not-found/page.js",
+  "/api/bookings/[reference]/route": "app/api/bookings/[reference]/route.js",
   "/api/bookings/route": "app/api/bookings/route.js",
   "/booking/[category]/[id]/page": "app/booking/[category]/[id]/page.js",
+  "/booking/page": "app/booking/page.js",
   "/checkout/[category]/[id]/page": "app/checkout/[category]/[id]/page.js",
   "/hotel-booking/page": "app/hotel-booking/page.js",
   "/page": "app/page.js",

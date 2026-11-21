@@ -16,6 +16,17 @@ type BookingRequest = {
   notes?: string;
 };
 
+export async function GET() {
+  await mkdir(dataDirectory, { recursive: true });
+
+  try {
+    const records = JSON.parse(await readFile(bookingsFile, "utf8")) as unknown[];
+    return NextResponse.json({ bookings: records });
+  } catch {
+    return NextResponse.json({ bookings: [] });
+  }
+}
+
 export async function POST(request: Request) {
   let payload: unknown;
 
