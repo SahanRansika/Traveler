@@ -1,13 +1,12 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
   "/api/bookings/[reference]/route": "app/api/bookings/[reference]/route.js",
   "/api/bookings/route": "app/api/bookings/route.js",
+  "/api/chat/route": "app/api/chat/route.js",
   "/booking/[category]/[id]/page": "app/booking/[category]/[id]/page.js",
   "/booking/page": "app/booking/page.js",
   "/checkout/[category]/[id]/page": "app/checkout/[category]/[id]/page.js",
   "/hotel-booking/page": "app/hotel-booking/page.js",
   "/page": "app/page.js",
-  "/signin/page": "app/signin/page.js",
   "/transaction/card/[category]/[id]/page": "app/transaction/card/[category]/[id]/page.js",
   "/transport-booking/page": "app/transport-booking/page.js",
   "/travel-booking/page": "app/travel-booking/page.js"

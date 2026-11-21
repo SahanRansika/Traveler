@@ -7,14 +7,14 @@ globalThis.__BUILD_MANIFEST = {
     "static/chunks/0cz1d0mv5g_q7.js"
   ],
   "lowPriorityFiles": [
-    "static/D3z-GozmkuUEYJJvDU3c8/_buildManifest.js",
-    "static/D3z-GozmkuUEYJJvDU3c8/_ssgManifest.js",
-    "static/D3z-GozmkuUEYJJvDU3c8/_clientMiddlewareManifest.js"
+    "static/eG-8o_84yU5VkNA8ihKbh/_buildManifest.js",
+    "static/eG-8o_84yU5VkNA8ihKbh/_ssgManifest.js",
+    "static/eG-8o_84yU5VkNA8ihKbh/_clientMiddlewareManifest.js"
   ],
   "rootMainFiles": [
-    "static/chunks/310vm2bl3xxpt.js",
+    "static/chunks/1pcw6gskne7pf.js",
     "static/chunks/1wnov70f88xjy.js",
-    "static/chunks/39_j1bdzreq0m.js",
+    "static/chunks/092r-mewpaf3q.js",
     "static/chunks/0c1ad7rcpjghx.js",
     "static/chunks/turbopack-2u1d16houkiyo.js"
   ],
@@ -22,9 +22,9 @@ globalThis.__BUILD_MANIFEST = {
   "pagesChunkGroupBootstrapParams": {
     "/page": {
       "otherChunks": [
-        "static/chunks/310vm2bl3xxpt.js",
+        "static/chunks/1pcw6gskne7pf.js",
         "static/chunks/1wnov70f88xjy.js",
-        "static/chunks/39_j1bdzreq0m.js",
+        "static/chunks/092r-mewpaf3q.js",
         "static/chunks/0c1ad7rcpjghx.js"
       ],
       "runtimeModuleIds": [
@@ -33,9 +33,9 @@ globalThis.__BUILD_MANIFEST = {
     },
     "/_not-found/page": {
       "otherChunks": [
-        "static/chunks/310vm2bl3xxpt.js",
+        "static/chunks/1pcw6gskne7pf.js",
         "static/chunks/1wnov70f88xjy.js",
-        "static/chunks/39_j1bdzreq0m.js",
+        "static/chunks/092r-mewpaf3q.js",
         "static/chunks/0c1ad7rcpjghx.js"
       ],
       "runtimeModuleIds": [
@@ -44,9 +44,9 @@ globalThis.__BUILD_MANIFEST = {
     },
     "/_global-error/page": {
       "otherChunks": [
-        "static/chunks/310vm2bl3xxpt.js",
+        "static/chunks/1pcw6gskne7pf.js",
         "static/chunks/1wnov70f88xjy.js",
-        "static/chunks/39_j1bdzreq0m.js",
+        "static/chunks/092r-mewpaf3q.js",
         "static/chunks/0c1ad7rcpjghx.js"
       ],
       "runtimeModuleIds": [
@@ -55,9 +55,9 @@ globalThis.__BUILD_MANIFEST = {
     },
     "/booking/page": {
       "otherChunks": [
-        "static/chunks/310vm2bl3xxpt.js",
+        "static/chunks/1pcw6gskne7pf.js",
         "static/chunks/1wnov70f88xjy.js",
-        "static/chunks/39_j1bdzreq0m.js",
+        "static/chunks/092r-mewpaf3q.js",
         "static/chunks/0c1ad7rcpjghx.js"
       ],
       "runtimeModuleIds": [
@@ -66,9 +66,9 @@ globalThis.__BUILD_MANIFEST = {
     },
     "/booking/[category]/[id]/page": {
       "otherChunks": [
-        "static/chunks/310vm2bl3xxpt.js",
+        "static/chunks/1pcw6gskne7pf.js",
         "static/chunks/1wnov70f88xjy.js",
-        "static/chunks/39_j1bdzreq0m.js",
+        "static/chunks/092r-mewpaf3q.js",
         "static/chunks/0c1ad7rcpjghx.js"
       ],
       "runtimeModuleIds": [
@@ -77,9 +77,9 @@ globalThis.__BUILD_MANIFEST = {
     },
     "/checkout/[category]/[id]/page": {
       "otherChunks": [
-        "static/chunks/310vm2bl3xxpt.js",
+        "static/chunks/1pcw6gskne7pf.js",
         "static/chunks/1wnov70f88xjy.js",
-        "static/chunks/39_j1bdzreq0m.js",
+        "static/chunks/092r-mewpaf3q.js",
         "static/chunks/0c1ad7rcpjghx.js"
       ],
       "runtimeModuleIds": [
@@ -88,9 +88,9 @@ globalThis.__BUILD_MANIFEST = {
     },
     "/hotel-booking/page": {
       "otherChunks": [
-        "static/chunks/310vm2bl3xxpt.js",
+        "static/chunks/1pcw6gskne7pf.js",
         "static/chunks/1wnov70f88xjy.js",
-        "static/chunks/39_j1bdzreq0m.js",
+        "static/chunks/092r-mewpaf3q.js",
         "static/chunks/0c1ad7rcpjghx.js"
       ],
       "runtimeModuleIds": [
@@ -99,9 +99,9 @@ globalThis.__BUILD_MANIFEST = {
     },
     "/signin/page": {
       "otherChunks": [
-        "static/chunks/310vm2bl3xxpt.js",
+        "static/chunks/1pcw6gskne7pf.js",
         "static/chunks/1wnov70f88xjy.js",
-        "static/chunks/39_j1bdzreq0m.js",
+        "static/chunks/092r-mewpaf3q.js",
         "static/chunks/0c1ad7rcpjghx.js"
       ],
       "runtimeModuleIds": [
@@ -110,9 +110,9 @@ globalThis.__BUILD_MANIFEST = {
     },
     "/signup/page": {
       "otherChunks": [
-        "static/chunks/310vm2bl3xxpt.js",
+        "static/chunks/1pcw6gskne7pf.js",
         "static/chunks/1wnov70f88xjy.js",
-        "static/chunks/39_j1bdzreq0m.js",
+        "static/chunks/092r-mewpaf3q.js",
         "static/chunks/0c1ad7rcpjghx.js"
       ],
       "runtimeModuleIds": [
@@ -121,9 +121,9 @@ globalThis.__BUILD_MANIFEST = {
     },
     "/transaction/card/[category]/[id]/page": {
       "otherChunks": [
-        "static/chunks/310vm2bl3xxpt.js",
+        "static/chunks/1pcw6gskne7pf.js",
         "static/chunks/1wnov70f88xjy.js",
-        "static/chunks/39_j1bdzreq0m.js",
+        "static/chunks/092r-mewpaf3q.js",
         "static/chunks/0c1ad7rcpjghx.js"
       ],
       "runtimeModuleIds": [
@@ -132,9 +132,9 @@ globalThis.__BUILD_MANIFEST = {
     },
     "/transport-booking/page": {
       "otherChunks": [
-        "static/chunks/310vm2bl3xxpt.js",
+        "static/chunks/1pcw6gskne7pf.js",
         "static/chunks/1wnov70f88xjy.js",
-        "static/chunks/39_j1bdzreq0m.js",
+        "static/chunks/092r-mewpaf3q.js",
         "static/chunks/0c1ad7rcpjghx.js"
       ],
       "runtimeModuleIds": [
@@ -143,9 +143,9 @@ globalThis.__BUILD_MANIFEST = {
     },
     "/travel-booking/page": {
       "otherChunks": [
-        "static/chunks/310vm2bl3xxpt.js",
+        "static/chunks/1pcw6gskne7pf.js",
         "static/chunks/1wnov70f88xjy.js",
-        "static/chunks/39_j1bdzreq0m.js",
+        "static/chunks/092r-mewpaf3q.js",
         "static/chunks/0c1ad7rcpjghx.js"
       ],
       "runtimeModuleIds": [
