@@ -4,6 +4,7 @@ import { Fraunces, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import ChatWidget from "@/components/ChatWidget";
 
 const fraunces = Fraunces({ subsets: ["latin"], variable: "--font-fraunces" });
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-jakarta" });
@@ -21,6 +22,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <Navbar />
         {children}
         <Footer />
+        <ChatWidget />
       </body>
     </html>
   );
