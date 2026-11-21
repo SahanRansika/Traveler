@@ -1,10 +1,10 @@
 [
   {
     "route": "/transaction/card/[category]/[id]",
-    "firstLoadUncompressedJsBytes": 483677,
+    "firstLoadUncompressedJsBytes": 482940,
     "firstLoadChunkPaths": [
       ".next\\static\\chunks\\1gn7fqohdbcg5.js",
-      ".next\\static\\chunks\\3c2_rtwldi9_y.js",
+      ".next\\static\\chunks\\0h1l9r4wihlja.js",
       ".next\\static\\chunks\\310vm2bl3xxpt.js",
       ".next\\static\\chunks\\1wnov70f88xjy.js",
       ".next\\static\\chunks\\39_j1bdzreq0m.js",
@@ -14,10 +14,10 @@
   },
   {
     "route": "/checkout/[category]/[id]",
-    "firstLoadUncompressedJsBytes": 482393,
+    "firstLoadUncompressedJsBytes": 481377,
     "firstLoadChunkPaths": [
       ".next\\static\\chunks\\1gn7fqohdbcg5.js",
-      ".next\\static\\chunks\\1xg3dwpp8vl4i.js",
+      ".next\\static\\chunks\\0ivxhhg4dyvzb.js",
       ".next\\static\\chunks\\310vm2bl3xxpt.js",
       ".next\\static\\chunks\\1wnov70f88xjy.js",
       ".next\\static\\chunks\\39_j1bdzreq0m.js",

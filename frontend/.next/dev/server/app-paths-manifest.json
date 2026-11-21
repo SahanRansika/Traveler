@@ -5,6 +5,7 @@
   "/checkout/[category]/[id]/page": "app/checkout/[category]/[id]/page.js",
   "/hotel-booking/page": "app/hotel-booking/page.js",
   "/page": "app/page.js",
+  "/signin/page": "app/signin/page.js",
   "/transaction/card/[category]/[id]/page": "app/transaction/card/[category]/[id]/page.js",
   "/transport-booking/page": "app/transport-booking/page.js",
   "/travel-booking/page": "app/travel-booking/page.js"

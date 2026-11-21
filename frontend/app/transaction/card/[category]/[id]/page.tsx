@@ -38,19 +38,19 @@ export default function CardTransactionPage() {
 
     const normalizedCardNumber = cardNumber.replace(/\D/g, "");
     if (cardName.trim().length < 2) {
-      setError("Enter a cardholder name for the demo.");
+      setError("Enter a cardholder name.");
       return;
     }
     if (normalizedCardNumber !== TEST_CARD_NUMBER) {
-      setError("Use the demo test card number: 4242 4242 4242 4242.");
+      setError("Use card number: 4242 4242 4242 4242.");
       return;
     }
     if (expiry !== TEST_EXPIRY) {
-      setError("Use the demo expiry: 12/30.");
+      setError("Use expiry: 12/30.");
       return;
     }
     if (cvv !== TEST_CVV) {
-      setError("Use the demo CVV: 123.");
+      setError("Use CVV: 123.");
       return;
     }
 
@@ -62,9 +62,9 @@ export default function CardTransactionPage() {
       <main className="mx-auto flex min-h-[100svh] max-w-3xl items-center px-5 pb-20 pt-28">
         <div className="w-full rounded-3xl border border-line bg-surface p-8 text-center sm:p-12">
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-sun text-3xl text-black">✓</div>
-          <h1 className="mt-6 font-display text-4xl">Demo transaction complete</h1>
+          <h1 className="mt-6 font-display text-4xl">Card details verified</h1>
           <p className="mt-3 text-muted">
-            No payment was sent and no card data was stored or transmitted.
+            No payment was processed and no card data was stored or transmitted.
           </p>
           {reference && <p className="mt-5 font-mono text-sm text-sun">Booking reference: {reference}</p>}
           <Link href="/" className="mt-7 inline-block rounded-full bg-sun px-6 py-3 font-semibold text-black">
@@ -80,21 +80,15 @@ export default function CardTransactionPage() {
       <Link href={`/checkout/${category}/${booking.id}`} className="text-sm font-semibold text-sun">
         ← Back to checkout
       </Link>
-      <div className="mt-4 flex flex-wrap items-center gap-3">
-        <h1 className="font-display text-4xl font-semibold sm:text-5xl">Demo card transaction</h1>
-        <span className="rounded-full border border-sun px-3 py-1 text-xs font-bold uppercase tracking-widest text-sun">
-          Demo only
-        </span>
-      </div>
+      <h1 className="mt-4 font-display text-4xl font-semibold sm:text-5xl">Card payment</h1>
       <p className="mt-3 max-w-2xl text-muted">
-        This page is a local visual demo. It does not connect to a payment provider and no card
-        information is sent or saved. Use the test values shown below.
+        Review and enter your card details below. No card information is transmitted or saved.
       </p>
 
       <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_0.38fr]">
         <form onSubmit={handleSubmit} className="rounded-3xl border border-line bg-surface p-6 sm:p-8">
           <div
-            aria-label="Demo card preview"
+            aria-label="Card preview"
             className="aspect-[1.586/1] max-w-md rounded-3xl border border-white/10 bg-gradient-to-br from-sun via-[#d98a2b] to-[#9e5718] p-6 text-black shadow-2xl"
           >
             <div className="flex items-start justify-between">
@@ -102,7 +96,7 @@ export default function CardTransactionPage() {
                 <div className="mt-2 h-px bg-black/25" />
                 <div className="mt-2 h-px bg-black/25" />
               </div>
-              <span className="font-display text-xl font-bold">TRAVELLER DEMO</span>
+              <span className="font-display text-xl font-bold">TRAVELLER</span>
             </div>
             <p className="mt-10 min-h-8 font-mono text-xl tracking-[0.14em] sm:text-2xl">
               {cardNumber || "4242 4242 4242 4242"}
@@ -111,7 +105,7 @@ export default function CardTransactionPage() {
               <div className="min-w-0">
                 <p className="text-[10px] font-bold uppercase tracking-widest opacity-70">Card holder</p>
                 <p className="mt-1 truncate text-sm font-bold uppercase tracking-wider">
-                  {cardName || "DEMO USER"}
+                  {cardName || "YOUR NAME"}
                 </p>
               </div>
               <div>
@@ -129,12 +123,12 @@ export default function CardTransactionPage() {
                 maxLength={30}
                 value={cardName}
                 onChange={(event) => setCardName(event.target.value)}
-                placeholder="Demo User"
+                placeholder="John Smith"
                 className="rounded-xl border border-line bg-black px-4 py-3 text-fg"
               />
             </label>
             <label className="grid gap-2 text-sm">
-              Test card number
+              Card number
               <input
                 required
                 inputMode="numeric"
@@ -146,13 +140,13 @@ export default function CardTransactionPage() {
                 }
                 placeholder="4242 4242 4242 4242"
                 pattern="[0-9 ]{19}"
-                title="Use 4242 4242 4242 4242"
+                title="Enter 4242 4242 4242 4242"
                 className="rounded-xl border border-line bg-black px-4 py-3 font-mono tracking-wider text-fg"
               />
             </label>
             <div className="grid grid-cols-2 gap-4">
               <label className="grid gap-2 text-sm">
-                Test expiry
+                Expiry
                 <input
                   required
                   inputMode="numeric"
@@ -167,7 +161,7 @@ export default function CardTransactionPage() {
                 />
               </label>
               <label className="grid gap-2 text-sm">
-                Test CVV
+                CVV
                 <input
                   required
                   type="password"
@@ -183,19 +177,13 @@ export default function CardTransactionPage() {
             </div>
           </div>
 
-          <div className="mt-5 rounded-xl border border-sun/30 bg-sun/10 p-4 text-sm text-muted">
-            Test values: <strong className="text-fg">4242 4242 4242 4242</strong>,
-            <strong className="text-fg"> 12/30</strong>, and
-            <strong className="text-fg"> 123</strong>. Do not enter real card details.
-          </div>
-
           {error && <p role="alert" className="mt-4 text-sm text-red-400">{error}</p>}
 
           <button
             type="submit"
             className="mt-6 w-full rounded-full bg-sun px-6 py-3 font-semibold text-black hover:bg-black hover:text-sun"
           >
-            Complete demo transaction
+            Verify card details
           </button>
         </form>
 

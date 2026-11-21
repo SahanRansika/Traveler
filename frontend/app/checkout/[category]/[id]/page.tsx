@@ -1,18 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { getBooking, type BookingCategory } from "@/lib/bookings";
 
 export default function CheckoutPage() {
   const params = useParams<{ category: string; id: string }>();
+  const router = useRouter();
   const category = params.category as BookingCategory;
   const validCategory = ["hotel", "transport", "travel"].includes(params.category);
   const booking = validCategory ? getBooking(category, params.id) : undefined;
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
-  const [reference, setReference] = useState("");
 
   if (!booking) {
     return (
@@ -47,38 +47,14 @@ export default function CheckoutPage() {
       });
       const result = await response.json();
       if (!response.ok) throw new Error(result.error || "Unable to submit your request.");
-      setReference(result.reference);
+      router.replace(
+        `/transaction/card/${params.category}/${params.id}?reference=${encodeURIComponent(String(result.reference))}`,
+      );
     } catch (submissionError) {
       setError(submissionError instanceof Error ? submissionError.message : "Unable to submit your request.");
     } finally {
       setSubmitting(false);
     }
-  }
-
-  if (reference) {
-    return (
-      <main className="mx-auto flex min-h-[100svh] max-w-3xl items-center px-5 pb-20 pt-28">
-        <div className="w-full rounded-3xl border border-line bg-surface p-8 text-center sm:p-12">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-sun text-3xl text-black">✓</div>
-          <h1 className="mt-6 font-display text-4xl">Request received</h1>
-          <p className="mt-3 text-muted">
-            Your {booking.name} booking request is pending confirmation.
-          </p>
-          <p className="mt-5 font-mono text-sm text-sun">Reference: {reference}</p>
-          <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
-            <Link
-              href={`/transaction/card/${category}/${booking.id}?reference=${encodeURIComponent(reference)}`}
-              className="inline-block rounded-full bg-sun px-6 py-3 font-semibold text-black"
-            >
-              Continue to demo card
-            </Link>
-            <Link href="/" className="inline-block rounded-full border border-line px-6 py-3 font-semibold text-fg">
-              Back to home
-            </Link>
-          </div>
-        </div>
-      </main>
-    );
   }
 
   const quantityLabel = category === "hotel" ? "Nights" : category === "transport" ? "Passengers" : "Guests";
@@ -129,7 +105,7 @@ export default function CheckoutPage() {
             disabled={submitting}
             className="mt-6 w-full rounded-full bg-sun px-6 py-3 font-semibold text-black hover:bg-black hover:text-sun disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {submitting ? "Submitting..." : "Submit booking request"}
+            {submitting ? "Continuing..." : "Continue to card payment"}
           </button>
         </form>
 
