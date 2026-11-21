@@ -1,9 +1,9 @@
 [
   {
     "route": "/transaction/card/[category]/[id]",
-    "firstLoadUncompressedJsBytes": 483605,
+    "firstLoadUncompressedJsBytes": 483677,
     "firstLoadChunkPaths": [
-      ".next\\static\\chunks\\1luwt_5zxoli3.js",
+      ".next\\static\\chunks\\1gn7fqohdbcg5.js",
       ".next\\static\\chunks\\3c2_rtwldi9_y.js",
       ".next\\static\\chunks\\310vm2bl3xxpt.js",
       ".next\\static\\chunks\\1wnov70f88xjy.js",
@@ -14,9 +14,9 @@
   },
   {
     "route": "/checkout/[category]/[id]",
-    "firstLoadUncompressedJsBytes": 482321,
+    "firstLoadUncompressedJsBytes": 482393,
     "firstLoadChunkPaths": [
-      ".next\\static\\chunks\\1luwt_5zxoli3.js",
+      ".next\\static\\chunks\\1gn7fqohdbcg5.js",
       ".next\\static\\chunks\\1xg3dwpp8vl4i.js",
       ".next\\static\\chunks\\310vm2bl3xxpt.js",
       ".next\\static\\chunks\\1wnov70f88xjy.js",
@@ -27,9 +27,9 @@
   },
   {
     "route": "/travel-booking",
-    "firstLoadUncompressedJsBytes": 479181,
+    "firstLoadUncompressedJsBytes": 479253,
     "firstLoadChunkPaths": [
-      ".next\\static\\chunks\\1luwt_5zxoli3.js",
+      ".next\\static\\chunks\\1gn7fqohdbcg5.js",
       ".next\\static\\chunks\\3wi28_ju_p0yf.js",
       ".next\\static\\chunks\\310vm2bl3xxpt.js",
       ".next\\static\\chunks\\1wnov70f88xjy.js",
@@ -40,9 +40,9 @@
   },
   {
     "route": "/transport-booking",
-    "firstLoadUncompressedJsBytes": 479166,
+    "firstLoadUncompressedJsBytes": 479238,
     "firstLoadChunkPaths": [
-      ".next\\static\\chunks\\1luwt_5zxoli3.js",
+      ".next\\static\\chunks\\1gn7fqohdbcg5.js",
       ".next\\static\\chunks\\2pdeywe-e8pri.js",
       ".next\\static\\chunks\\310vm2bl3xxpt.js",
       ".next\\static\\chunks\\1wnov70f88xjy.js",
@@ -53,9 +53,9 @@
   },
   {
     "route": "/hotel-booking",
-    "firstLoadUncompressedJsBytes": 479150,
+    "firstLoadUncompressedJsBytes": 479222,
     "firstLoadChunkPaths": [
-      ".next\\static\\chunks\\1luwt_5zxoli3.js",
+      ".next\\static\\chunks\\1gn7fqohdbcg5.js",
       ".next\\static\\chunks\\0qexu90yf65-c.js",
       ".next\\static\\chunks\\310vm2bl3xxpt.js",
       ".next\\static\\chunks\\1wnov70f88xjy.js",
@@ -66,9 +66,9 @@
   },
   {
     "route": "/",
-    "firstLoadUncompressedJsBytes": 474454,
+    "firstLoadUncompressedJsBytes": 474526,
     "firstLoadChunkPaths": [
-      ".next\\static\\chunks\\1luwt_5zxoli3.js",
+      ".next\\static\\chunks\\1gn7fqohdbcg5.js",
       ".next\\static\\chunks\\2gwe8yudhrsqc.js",
       ".next\\static\\chunks\\310vm2bl3xxpt.js",
       ".next\\static\\chunks\\1wnov70f88xjy.js",
@@ -79,9 +79,9 @@
   },
   {
     "route": "/signin",
-    "firstLoadUncompressedJsBytes": 474454,
+    "firstLoadUncompressedJsBytes": 474526,
     "firstLoadChunkPaths": [
-      ".next\\static\\chunks\\1luwt_5zxoli3.js",
+      ".next\\static\\chunks\\1gn7fqohdbcg5.js",
       ".next\\static\\chunks\\2gwe8yudhrsqc.js",
       ".next\\static\\chunks\\310vm2bl3xxpt.js",
       ".next\\static\\chunks\\1wnov70f88xjy.js",
@@ -92,9 +92,9 @@
   },
   {
     "route": "/signup",
-    "firstLoadUncompressedJsBytes": 474454,
+    "firstLoadUncompressedJsBytes": 474526,
     "firstLoadChunkPaths": [
-      ".next\\static\\chunks\\1luwt_5zxoli3.js",
+      ".next\\static\\chunks\\1gn7fqohdbcg5.js",
       ".next\\static\\chunks\\2gwe8yudhrsqc.js",
       ".next\\static\\chunks\\310vm2bl3xxpt.js",
       ".next\\static\\chunks\\1wnov70f88xjy.js",
@@ -105,9 +105,9 @@
   },
   {
     "route": "/_not-found",
-    "firstLoadUncompressedJsBytes": 466488,
+    "firstLoadUncompressedJsBytes": 466560,
     "firstLoadChunkPaths": [
-      ".next\\static\\chunks\\1luwt_5zxoli3.js",
+      ".next\\static\\chunks\\1gn7fqohdbcg5.js",
       ".next\\static\\chunks\\310vm2bl3xxpt.js",
       ".next\\static\\chunks\\1wnov70f88xjy.js",
       ".next\\static\\chunks\\39_j1bdzreq0m.js",
@@ -117,9 +117,9 @@
   },
   {
     "route": "/booking/[category]/[id]",
-    "firstLoadUncompressedJsBytes": 466488,
+    "firstLoadUncompressedJsBytes": 466560,
     "firstLoadChunkPaths": [
-      ".next\\static\\chunks\\1luwt_5zxoli3.js",
+      ".next\\static\\chunks\\1gn7fqohdbcg5.js",
       ".next\\static\\chunks\\310vm2bl3xxpt.js",
       ".next\\static\\chunks\\1wnov70f88xjy.js",
       ".next\\static\\chunks\\39_j1bdzreq0m.js",

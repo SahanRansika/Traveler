@@ -13,6 +13,7 @@ const bookingLinks = [
   { label: "Hotel", href: "/hotel-booking" },
   { label: "Transport", href: "/transport-booking" },
   { label: "Travel", href: "/travel-booking" },
+  { label: "Booking", href: "/#services" },
 ];
 
 export default function Navbar() {
@@ -23,7 +24,8 @@ export default function Navbar() {
     pathname === "/transport-booking" ||
     pathname === "/travel-booking" ||
     pathname.startsWith("/booking/") ||
-    pathname.startsWith("/checkout/");
+    pathname.startsWith("/checkout/") ||
+    pathname.startsWith("/transaction/card/");
   const links = isBookingPage ? bookingLinks : homeLinks;
 
   return (
