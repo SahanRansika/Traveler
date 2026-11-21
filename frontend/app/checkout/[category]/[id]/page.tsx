@@ -11,6 +11,10 @@ export default function CheckoutPage() {
   const validCategory = ["hotel", "transport", "travel"].includes(params.category);
   const booking = validCategory ? getBooking(category, params.id) : undefined;
   const [completed, setCompleted] = useState(false);
+  const [cardName, setCardName] = useState("");
+  const [cardNumber, setCardNumber] = useState("");
+  const [expiry, setExpiry] = useState("");
+  const [cvv, setCvv] = useState("");
 
   if (!booking) {
     return (
@@ -66,19 +70,91 @@ export default function CheckoutPage() {
           </div>
 
           <h2 className="mt-8 font-display text-2xl">Payment details</h2>
+          <div className="mt-5 aspect-[1.586/1] max-w-md rounded-3xl border border-white/10 bg-gradient-to-br from-sun via-[#d98a2b] to-[#9e5718] p-6 text-black shadow-2xl">
+            <div className="flex items-start justify-between">
+              <div className="h-10 w-12 rounded-lg border border-black/20 bg-[#f5d58a]">
+                <div className="mt-2 h-px bg-black/25" />
+                <div className="mt-2 h-px bg-black/25" />
+              </div>
+              <span className="font-display text-xl font-bold">TRAVELLER</span>
+            </div>
+            <p className="mt-10 min-h-8 font-mono text-xl tracking-[0.14em] sm:text-2xl">
+              {cardNumber || "0000 0000 0000 0000"}
+            </p>
+            <div className="mt-7 flex items-end justify-between gap-4">
+              <div className="min-w-0">
+                <p className="text-[10px] font-bold uppercase tracking-widest opacity-70">Card holder</p>
+                <p className="mt-1 truncate text-sm font-bold uppercase tracking-wider">
+                  {cardName || "YOUR NAME"}
+                </p>
+              </div>
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-widest opacity-70">Expires</p>
+                <p className="mt-1 text-sm font-bold">{expiry || "MM/YY"}</p>
+              </div>
+            </div>
+          </div>
           <div className="mt-5 grid gap-4">
             <label className="grid gap-2 text-sm">Cardholder name
-              <input required name="cardName" className="rounded-xl border border-line bg-black px-4 py-3 text-fg" />
+              <input
+                required
+                name="cardName"
+                value={cardName}
+                onChange={(event) => setCardName(event.target.value)}
+                maxLength={30}
+                placeholder="Name on card"
+                className="rounded-xl border border-line bg-black px-4 py-3 text-fg"
+              />
             </label>
             <label className="grid gap-2 text-sm">Card number
-              <input required name="cardNumber" inputMode="numeric" minLength={12} placeholder="0000 0000 0000 0000" className="rounded-xl border border-line bg-black px-4 py-3 text-fg" />
+              <input
+                required
+                name="cardNumber"
+                inputMode="numeric"
+                autoComplete="cc-number"
+                value={cardNumber}
+                onChange={(event) =>
+                  setCardNumber(
+                    event.target.value.replace(/\D/g, "").slice(0, 16).replace(/(.{4})/g, "$1 ").trim(),
+                  )
+                }
+                pattern="[0-9 ]{19}"
+                title="Enter a 16-digit card number"
+                placeholder="0000 0000 0000 0000"
+                className="rounded-xl border border-line bg-black px-4 py-3 font-mono text-fg tracking-wider"
+              />
             </label>
             <div className="grid grid-cols-2 gap-4">
               <label className="grid gap-2 text-sm">Expiry
-                <input required name="expiry" placeholder="MM/YY" className="rounded-xl border border-line bg-black px-4 py-3 text-fg" />
+                <input
+                  required
+                  name="expiry"
+                  inputMode="numeric"
+                  autoComplete="cc-exp"
+                  value={expiry}
+                  onChange={(event) => {
+                    const digits = event.target.value.replace(/\D/g, "").slice(0, 4);
+                    setExpiry(digits.length > 2 ? `${digits.slice(0, 2)}/${digits.slice(2)}` : digits);
+                  }}
+                  pattern="[0-9]{2}/[0-9]{2}"
+                  placeholder="MM/YY"
+                  className="rounded-xl border border-line bg-black px-4 py-3 text-fg"
+                />
               </label>
               <label className="grid gap-2 text-sm">CVV
-                <input required name="cvv" type="password" inputMode="numeric" minLength={3} maxLength={4} className="rounded-xl border border-line bg-black px-4 py-3 text-fg" />
+                <input
+                  required
+                  name="cvv"
+                  type="password"
+                  inputMode="numeric"
+                  autoComplete="cc-csc"
+                  value={cvv}
+                  onChange={(event) => setCvv(event.target.value.replace(/\D/g, "").slice(0, 4))}
+                  minLength={3}
+                  maxLength={4}
+                  placeholder="•••"
+                  className="rounded-xl border border-line bg-black px-4 py-3 text-fg"
+                />
               </label>
             </div>
           </div>
